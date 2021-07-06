@@ -5,22 +5,14 @@ import java.io.Serializable;
 //读者信息
 public class Reader implements Serializable {
     private Integer id;//编号
-    private Integer reader_id;//登陆名
+    private Integer reader_id;//登陆名/读者id
     private String name;//姓名
     private Integer password = 123;//默认密码
     private String sex;//性别
     private String birthday;// 用于添加出生日期
     private String address;//地址
     private String telephone;//电话
-    private Integer card_state;//读者等级
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
+    private Integer card_state;//读者等级/可借阅书籍
 
     public Integer getReader_id() {
         return reader_id;

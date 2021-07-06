@@ -14,6 +14,6 @@
     <base href="<%=basePath%>"/>
 </head>
 <body>
-<jsp:forward page="/WEB-INF/jsp/login.jsp"></jsp:forward>
+<jsp:forward page="toLogin.action"></jsp:forward>
 </body>
 </html>

@@ -10,12 +10,12 @@
 <head>
     <title>添加读者页面</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" >
-    <link rel="stylesheet" href="${APP_PATH}/css/layui.css"  media="all">
-    <link rel="${APP_PATH}/css/modules/laydate/default/laydate.css" >
-    <link rel="stylesheet" href="${APP_PATH}/css/style.css">
-    <link rel="stylesheet" href="${APP_PATH}/css/modules/layer/default/layer.css">
-    <script src="${APP_PATH}/js/laydate.js"></script> <!-- 要在layui 的前边不然时间插件失效 -->
-    <script src="${APP_PATH}/js/layui.js" ></script>
+    <link rel="stylesheet" href="css/layui.css"  media="all">
+    <link rel="css/modules/laydate/default/laydate.css" >
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/modules/layer/default/layer.css">
+    <script src="js/laydate.js"></script> <!-- 要在layui 的前边不然时间插件失效 -->
+    <script src="js/layui.js" ></script>
     <style>
         body{padding: 20px;}
         .demo-input{padding-left: 10px; height: 38px; min-width: 262px; line-height: 38px; border: 1px solid #e6e6e6;  background-color: #fff;  border-radius: 2px;}
@@ -24,7 +24,7 @@
     </style>
 </head>
 <body>
-<form class="layui-form" action="${APP_PATH}/library/submitAddReader.do" method="post" id="addbook" lay-filter="example">
+<form class="layui-form" action="library/submitAddReader.do" method="post" id="addbook" lay-filter="example">
     <div class="layui-form-item">
 
         <div class="layui-inline">

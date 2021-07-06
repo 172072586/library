@@ -1,6 +1,6 @@
 package com.home.entity;
 
-//借阅信息表
+//借阅信息
 public class LendInfo {
     private Integer id;
     private Integer reader_id;//借阅号

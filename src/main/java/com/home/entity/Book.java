@@ -1,6 +1,6 @@
 package com.home.entity;
 
-//书籍信息表
+//书籍信息
 public class Book {
     private Integer book_id;// 书本编号
     private String name;//书名

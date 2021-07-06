@@ -17,7 +17,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>myweb</servlet-name>
-        <url-pattern>*.do</url-pattern>
+        <url-pattern>*.action</url-pattern>
     </servlet-mapping>
 
     <!--注册spring监听器：创建spring容器对象-->

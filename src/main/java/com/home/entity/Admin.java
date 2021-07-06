@@ -1,6 +1,6 @@
 package com.home.entity;
 
-//管理员表
+//管理员
 public class Admin {
     private Integer id;//管理员id
     private String name;//管理员姓名

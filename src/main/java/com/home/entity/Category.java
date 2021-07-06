@@ -1,6 +1,6 @@
 package com.home.entity;
 
-//类别表
+//类别
 public class Category {
     private Integer cid;//类别id
     private String cname;//类别名字

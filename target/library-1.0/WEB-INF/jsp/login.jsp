@@ -39,19 +39,15 @@
             <button lay-submit lay-filter="login" class="layui-btn">登录</button>
         </div>
         <hr/>
-        <p><a href="toRegister.htm" class="fl">立即注册</a><a href="javascript:;" onclick="forgetpsw();" class="fr">忘记密码？</a></p>
+        <p><a href="toRegister.action" class="fl">立即注册</a><a href="javascript:;" onclick="forgetpsw();" class="fr">忘记密码？</a></p>
     </form>
 </div>
 <script type="text/javascript">
     layui.use(['form','layer','jquery'], function () {
-
         // 操作对象
         var form = layui.form;
         var $ = layui.jquery;
-
-
     });
-
 </script>
 </body>
 </html>

@@ -19,10 +19,10 @@
 <div class="login-main">
     <header class="layui-elip" style="width: 82%;;margin-top:40px">注册页</header>
     <!-- 表单选项 -->
-    <form class="layui-form" action="library/submitAddReader.action" method="post">
+    <form class="layui-form" action="register.action" method="post">
         <div class="layui-input-inline">
             <div class="layui-inline" style="width: 85%">
-                <input type="text" id="user" name="reader_id" required  lay-verify="required" placeholder="请输入学号" autocomplete="off" class="layui-input">
+                <input type="text" id="id" name="reader_id" required  lay-verify="required" placeholder="请输入学号" autocomplete="off" class="layui-input">
             </div>
             <div class="layui-inline">
                 <i class="layui-icon" id="ri" style="color: green;font-weight: bolder;" hidden></i>
@@ -61,8 +61,8 @@
         </div>
         <div class="layui-input-block">
             <div class="layui-inline" style="width: 85%">
-                <input type="radio" name="sex" value="男" title="男">
-                <input type="radio" name="sex" value="女" title="女" checked>
+                <input type="radio" name="sex" value="男" title="男"  checked>
+                <input type="radio" name="sex" value="女" title="女">
             </div>
         </div>
         <div class="layui-input-inline">
@@ -91,11 +91,20 @@
             </div>
         </div>
         <div class="layui-input-inline login-btn" style="width: 85%">
-            <button type="submit" lay-submit lay-filter="sub" class="layui-btn">注册</button>
+            <button type="submit" lay-submit lay-filter="sub" class="layui-btn" id="submit">注册</button>
         </div>
         <hr style="width: 85%" />
         <p style="width: 85%"><a href="toLogin.htm" class="fl">已有账号？立即登录</a></p>
     </form>
 </div>
+
+<script type="text/javascript">
+    layui.use(['form','jquery','layer'], function () {
+        var form   = layui.form;
+        var $      = layui.jquery;
+        var layer  = layui.layer;
+        layer.tips('学号就是借阅号哦!', '#user');
+    });
+</script>
 </body>
 </html>
