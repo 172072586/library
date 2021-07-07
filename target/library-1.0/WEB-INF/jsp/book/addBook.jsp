@@ -14,6 +14,7 @@
     <link rel="css/modules/laydate/default/laydate.css" >
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/modules/layer/default/layer.css">
+    <script type="text/javascript" src="js/jquery.js"></script>
     <script src="js/laydate.js"></script> <!-- 要在layui 的前边不然时间插件失效 -->
     <script src="js/layui.js" ></script>
     <style>

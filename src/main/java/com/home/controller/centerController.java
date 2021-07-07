@@ -32,6 +32,12 @@ public class centerController {
         return "register";
     }
 
+    @RequestMapping("/toAlterPwd")
+    public String toAlterPwd(){
+        //修改密码页面
+        return "alterPwd";
+    }
+
     //注册读者
     @RequestMapping("/register")
     public ModelAndView register(Reader reader){

@@ -8,6 +8,7 @@
 <head>
     <base href="<%=basePath%>"/>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script type="text/javascript" src="js/jquery.js"></script>
     <script src="js/layui.js"></script>
     <title>图书类别</title>
 </head>

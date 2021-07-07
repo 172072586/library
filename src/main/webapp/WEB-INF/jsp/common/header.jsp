@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="css/modules/code.css">
     <link rel="stylesheet" href="css/modules/laydate/default/laydate.css">
     <link rel="stylesheet" href="css/modules/layer/default/layer.css">
+    <script type="text/javascript" src="js/jquery.js"></script>
     <title></title>
     <style type="text/css">
         .layui-table-cell{
@@ -30,17 +31,17 @@
             <li class="layui-nav-item">
                 <a href="javascript:;">图书管理</a>
                 <dl class="layui-nav-child">
-                    <dd><a href="library/index.do">图书列表</a></dd>
-                    <dd><a href="type/bookType.do">分类管理</a></dd>
+                    <dd><a href="book.action">图书列表</a></dd>
+                    <dd><a href="bookType.action">分类管理</a></dd>
                 </dl>
             </li>
-            <li class="layui-nav-item"><a href="reader/readerIndex.htm">读者列表</a></li>
-            <li class="layui-nav-item"><a href="listDisBackAdmin.htm">借阅管理</a></li>
+            <li class="layui-nav-item"><a href="readerIndex.action">读者列表</a></li>
+            <li class="layui-nav-item"><a href="listDisBackAdmin.action">借阅管理</a></li>
             <li class="layui-nav-item"><a onclick="alterPwd('0');">修改密码</a></li>
         </c:if>
         <c:if test="${reader!=null}">
-            <li class="layui-nav-item"><a href="library/frontIndex.htm">图书列表</a></li>
-            <li class="layui-nav-item"><a href="listDisBack.htm">借阅记录</a></li>
+            <li class="layui-nav-item"><a href="book.action">图书列表</a></li>
+            <li class="layui-nav-item"><a href="listDisBack.action">借阅记录</a></li>
             <li class="layui-nav-item"><a onclick="alterPwd('1');">修改密码</a></li>
         </c:if>
 
@@ -50,17 +51,25 @@
             <a href="javascript:;">
                 <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
                 <%--${admin2.name }--%>
-                ${admin.name}
+               ${admin.name}
             </a>
         </li>
         <li class="layui-nav-item"><a href="logout.action">退出</a></li>
     </ul>
 </div>
-
-
 <div style="padding: 15px;">
 </div>
 </body>
 <script src="js/layui.js"></script>
-
+<script>
+    function alterPwd(state){//添加
+        layer.open({
+            type: 2,
+            title: '修改密码',
+            skin: 'layui-layer-demo', //加上边框
+            area: ['500px', '300px'], //宽高
+            content: 'toAlterPwd.action?state='+state
+        });
+    }
+</script>
 </html>

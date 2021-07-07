@@ -14,6 +14,7 @@
     <style>
         .demo-carousel{height: 200px; line-height: 200px; text-align: center;}
     </style>
+    <script type="text/javascript" src="js/jquery.js"></script>
 </head>
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">

@@ -6,6 +6,7 @@
 <head>
     <base href="<%=basePath%>"/>
     <title>读者未还图书</title>
+    <script type="text/javascript" src="js/jquery.js"></script>
 </head>
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">

@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="css/layui.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/modules/layer/default/layer.css">
+    <script type="text/javascript" src="js/jquery.js"></script>
     <script src="js/layui.js" ></script>
 </head>
 <body>

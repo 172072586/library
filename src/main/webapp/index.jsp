@@ -15,5 +15,6 @@
 </head>
 <body>
 <jsp:forward page="toLogin.action"></jsp:forward>
+
 </body>
 </html>

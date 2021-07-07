@@ -10,7 +10,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <title>图书管理系统</title>
-
+    <script type="text/javascript" src="js/jquery.js"></script>
     <style>
         .demo-carousel{height: 200px; line-height: 200px; text-align: center;}
     </style>
@@ -50,11 +50,24 @@
 </script>
 
 <script src="js/layui.js"></script>
-
 <script>
+
+
     layui.config({
         version: '1554901098009' //为了更新 js 缓存，可忽略
     });
+
+
+    function add(){//添加
+        layer.open({
+            type: 2,
+            title: '添加图书',
+            skin: 'layui-layer-demo', //加上边框
+            area: ['800px', '600px'], //宽高
+            content: 'addBook.action'
+        });
+    }
+
     layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'element', 'slider'], function(){
         var laydate = layui.laydate //日期
             ,laypage = layui.laypage //分页
@@ -90,6 +103,31 @@
             //用于搜索结果重载
             ,id: 'testReload'
         });
+        var $ = layui.$, active = {
+            reload: function(){
+                var bname = $('#bname');
+                var author = $('#author');
+                var cid = $('#cid');
+                //执行重载
+                table.reload('testReload', {
+                    //一定要加不然乱码
+                    method: 'post'
+                    ,page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                    ,where: {
+                        //bname表示传到后台的参数,bname.val()表示具体数据
+                        bname: bname.val(),
+                        author: author.val(),
+                        cid: cid.val()
+                    }
+                });
+            }
+        };
+        $('.demoTable .layui-btn').on('click', function(){
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
 
 
         //监听行工具事件
@@ -106,7 +144,49 @@
                 edit(data);
             }
         });
+        //后边两个参数仅仅是因为要执行动态删除dom
+        function del(book_id,obj,index){
+
+            $.ajax({
+                url:'library/delBook.do?book_id='+book_id,
+                dataType:'json',
+                type:'post',
+                success:function (data) {
+                    if (data.success){
+                        obj.del(); //删除对应行（tr）的DOM结构
+                        layer.close(index);
+                    }else{
+                        layer.msg(data.message);
+                    }
+                }
+            })
+        }
+
+        function edit(data){//修改
+            layer.open({
+                type: 2,
+                title: '修改图书信息',
+                skin: 'layui-layer-demo', //加上边框
+                area: ['800px', '600px'], //宽高
+                method: 'post',
+                content: 'library/editBook.do?'
+                    +'book_id='+data.book_id
+            });
+        }
+
+        function find(data){
+            layer.open({
+                type: 2,
+                title: '查看图书信息',
+                skin: 'layui-layer-demo', //加上边框
+                area: ['800px', '600px'], //宽高
+                method: 'post',
+                content: 'library/findBook.do?'
+                    +'book_id='+data.book_id
+            });
+        }
     });
+
 </script>
 </body>
 </html>
