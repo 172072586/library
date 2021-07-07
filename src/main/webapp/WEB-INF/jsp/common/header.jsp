@@ -38,10 +38,11 @@
             <li class="layui-nav-item"><a href="listDisBackAdmin.htm">借阅管理</a></li>
             <li class="layui-nav-item"><a onclick="alterPwd('0');">修改密码</a></li>
         </c:if>
-
+        <c:if test="${reader!=null}">
             <li class="layui-nav-item"><a href="library/frontIndex.htm">图书列表</a></li>
             <li class="layui-nav-item"><a href="listDisBack.htm">借阅记录</a></li>
             <li class="layui-nav-item"><a onclick="alterPwd('1');">修改密码</a></li>
+        </c:if>
 
     </ul>
     <ul class="layui-nav layui-layout-right">
@@ -52,7 +53,7 @@
                 ${admin.name}
             </a>
         </li>
-        <li class="layui-nav-item"><a href="loginout.htm">退出</a></li>
+        <li class="layui-nav-item"><a href="logout.action">退出</a></li>
     </ul>
 </div>
 

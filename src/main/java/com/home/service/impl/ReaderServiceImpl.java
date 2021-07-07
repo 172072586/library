@@ -16,4 +16,11 @@ public class ReaderServiceImpl implements ReaderService {
         //注册读者
         return readerDao.insertReaderDao(reader);
     }
+
+    @Override
+    public Reader queryReader(String reader_id, String password) {
+        //验证读者是否存在
+        Reader reader = readerDao.selectReaderDao(reader_id, password);
+        return reader;
+    }
 }

@@ -12,13 +12,14 @@
     <link rel="stylesheet" href="css/layui.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/modules/layer/default/layer.css">
+    <script type="text/javascript" src="js/jquery.js"></script>
     <script src="js/layui.js"></script>
 </head>
 <body>
 
 <div class="login-main">
     <header class="layui-elip">图书管理系统登录</header>
-    <form class="layui-form" action="library/list.action" method="post">
+    <form class="layui-form" action="index.action" method="post">
         <div class="layui-input-inline">
             <input type="text" name="name" required lay-verify="required" placeholder="学号" autocomplete="off"
                    class="layui-input">
@@ -36,18 +37,30 @@
         </div>
 
         <div class="layui-input-inline login-btn">
-            <button lay-submit lay-filter="login" class="layui-btn">登录</button>
+            <input type="submit" value="登录"  class="layui-btn"/>
+
         </div>
         <hr/>
-        <p><a href="toRegister.action" class="fl">立即注册</a><a href="javascript:;" onclick="forgetpsw();" class="fr">忘记密码？</a></p>
+        <p><a href="toRegister.action" class="fl">立即注册</a>
+
+            <a href="" class="fr">忘记密码？</a>
     </form>
-</div>
+</div><div id="msg">${msg}</div>
 <script type="text/javascript">
     layui.use(['form','layer','jquery'], function () {
         // 操作对象
         var form = layui.form;
         var $ = layui.jquery;
     });
+
+    $(function () {
+        //返回值不为空字符串
+        if($("#msg").text() != ""){
+            alert("注册成功")
+        }
+    })
+
+
 </script>
 </body>
 </html>
