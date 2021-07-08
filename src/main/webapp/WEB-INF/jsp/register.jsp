@@ -43,10 +43,14 @@
                 <div style="color: red" id="errorPass"></div>
             </div>
         </div>
-        <div class="layui-input-block">
-            <div class="layui-inline" style="width: 85%">
-                <input type="radio" name="sex" value="男" title="男"  checked>
-                <input type="radio" name="sex" value="女" title="女">
+        <div class="layui-form-item">
+            <div class="layui-inline"style="width: 85%">
+                <select name="sex" id="sex" required lay-verify="required">
+                    <option value="">请选择性别</option>
+                    <option value="男" >男</option>
+                    <option value="女" >女</option>
+                </select>
+                <div style="color: red" id="errorsex"></div>
             </div>
         </div>
         <div class="layui-input-inline">
@@ -62,17 +66,14 @@
             </div>
         </div>
         <div class="layui-input-inline">
-            <div class="layui-inline" style="width: 85%">
+            <div class="layui-inline" style="width: 85%" align="center">
                 <input type="text" id="address" name="address" required lay-verify="required" placeholder="请输入地址" autocomplete="off" class="layui-input">
                 <div style="color: red" id="errorAddress"></div>
             </div>
         </div>
         <div class="layui-input-inline">
             <div class="layui-inline" style="width: 85%">
-                <div class="layui-input-inline">
-                    <input type="text" id="age" name="age" lay-verify="required" placeholder="请输入年龄" autocomplete="off" class="layui-input" >
-                    <div style="color: red" id="errorAge"></div>
-                </div>
+                <input type="text" name="birthday" required lay-verify="required" placeholder="请输入出生日期" autocomplete="off" class="layui-input" id="test1">
             </div>
         </div>
         <div class="layui-input-inline login-btn" style="width: 85%">
@@ -84,6 +85,21 @@
 
     </form>
 </div>
+
+<script >
+    lay('#version').html('-v'+ laydate.v);
+
+    //执行一个laydate实例
+    laydate.render({
+        elem: '#test1' //指定元素
+    });
+
+    layui.use(['form','layer','jquery'], function () {
+        // 操作对象
+        var form = layui.form;
+        var $ = layui.jquery;
+    })
+</script>
 
 <script type="text/javascript">
     layui.use(['form','jquery','layer'], function () {

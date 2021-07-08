@@ -65,15 +65,21 @@ public class centerController {
             Admin admin = adminService.queryAdmin(name, password);
             if(admin != null){
                 session.setAttribute("admin",admin);
+                mv.setViewName("index");
+                return mv;
             }
         }else if(power == 1){//读者账号
             //验证账号是否存在
             Reader reader = readerService.queryReader(name, password);
             if(reader != null){
                 session.setAttribute("reader",reader);
+                mv.setViewName("index");
+                return mv;
             }
         }
-        mv.setViewName("index");
+        //账号异常 暂时返回空字符串  new throw loginException
+        session.setAttribute("error"," ");
+        mv.setViewName("login");
         return mv;
     }
 

@@ -50,7 +50,7 @@
         <li class="layui-nav-item">
             <a href="javascript:;">
                 <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
-                <%--${admin2.name }--%>
+                ${reader.name }
                ${admin.name}
             </a>
         </li>

@@ -52,8 +52,20 @@
 </script>
 
 <script src="js/layui.js"></script>
-
 <script>
+    layui.config({
+        version: '1554901098009' //为了更新 js 缓存，可忽略
+    });
+
+    function add(){//添加
+        layer.open({
+            type: 2,
+            title: '添加读者',
+            skin: 'layui-layer-demo', //加上边框
+            area: ['800px', '500px'], //宽高
+            content: 'addReader.action'
+        });
+    }
 
     layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'element', 'slider'], function(){
         var laydate = layui.laydate //日期
@@ -65,11 +77,12 @@
             ,element = layui.element //元素操作
             ,slider = layui.slider //滑块
 
+
         //执行一个 table 实例
         table.render({
             elem: '#demo'
             ,height: 550
-            ,url: '${APP_PATH}/reader/listReader.do' //数据接口
+            ,url: 'reader/listReader.do' //数据接口
             ,title: '图书表'
             ,page: true
             ,limit: 6
@@ -88,7 +101,91 @@
             //用于搜索结果重载
             ,id: 'testReload'
         });
+        var $ = layui.$, active = {
+            reload: function(){
+                var reader_id = $('#reader_id');
+                var rname = $('#rname');
+                //执行重载
+                table.reload('testReload', {
+                    //一定要加不然乱码
+                    method: 'post'
+                    ,page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                    ,where: {
+                        //bname表示传到后台的参数,bname.val()表示具体数据
+                        reader_id: reader_id.val(),
+                        rname: rname.val(),
+                    }
+                });
+            }
+        };
+        $('.demoTable .layui-btn').on('click', function(){
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+
+
+        //监听行工具事件
+        table.on('tool(test)', function(obj){ //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
+            var data = obj.data //获得当前行数据
+                ,layEvent = obj.event; //获得 lay-event 对应的值
+            if(layEvent === 'detail'){
+                find(data);
+            } else if(layEvent === 'del'){
+                layer.confirm('真的删除行么', function(index){
+                    del(data.reader_id,obj,index);
+                });
+            } else if(layEvent === 'edit'){
+                edit(data);
+            }
+        });
+//后边两个参数仅仅是因为要执行动态删除dom
+        function del(id,obj,index){
+
+            $.ajax({
+                url:'reader/delReader.do?id='+id,
+                dataType:'json',
+                type:'post',
+                success:function (data) {
+                    if (data.success){
+                        obj.del(); //删除对应行（tr）的DOM结构
+                        layer.close(index);
+                    }else{
+                        layer.msg(data.success);
+                    }
+                }
+            })
+        }
+
+
+        function edit(data){//修改
+
+            layer.open({
+                type: 2,
+                title: '修改图书信息',
+                skin: 'layui-layer-demo', //加上边框
+                area: ['800px', '500px'], //宽高
+                method: 'post',
+                content: 'reader/editReader.do?'
+                    +'id='+data.id
+            });
+        }
+
+        function find(data){
+            layer.open({
+                type: 2,
+                title: '查看读者信息',
+                skin: 'layui-layer-demo', //加上边框
+                area: ['800px', '500px'], //宽高
+                method: 'post',
+                content: 'reader/findReader.do?'
+                    +'id='+data.id
+            });
+        }
     });
+
 </script>
+
 </body>
 </html>

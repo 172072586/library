@@ -97,7 +97,6 @@
                 ,{field: 'pubdate', title: '出版日期', width: 120, sort: true}
                 ,{field: 'stock', title: '库存', width: 100}
                 ,{field: 'price', title: '价格', width: 100, sort: true}
-                // ,{field: 'introduction', title: '简介', width:150}
                 ,{fixed: 'right', width: 200, align:'center', toolbar: '#barDemo'}
             ]]
             //用于搜索结果重载

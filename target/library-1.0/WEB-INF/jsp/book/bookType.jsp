@@ -33,6 +33,19 @@
     <script src="js/layui.js"></script>
 
 <script type="text/javascript">
+    //查询图书类型
+    $(function () {
+        $.ajax({
+            url:'queryType.action',
+            dataType:'json',
+            type:'post',
+            success:function (data) {
+
+            }
+        })
+    })
+
+
     layui.use(['laypage', 'layer', 'table', 'element','jquery'], function(){
         laypage = layui.laypage //分页
             ,layer = layui.layer //弹层
@@ -53,28 +66,68 @@
         });
 
     });
-    function addType(){
-        layui.use(['laypage', 'layer', 'table', 'element','jquery'], function(){
-            layer = layui.layer //弹层
-                ,element = layui.element; //元素操作
-            var $ = layui.jquery;
-            layer.prompt({title: '添加类别', formType: 2}, function(text, index){
-                layer.close(index);
-                $.ajax({
-                    url:'type/addBookType.do',
-                    data:{'cname':text},
-                    dataType:'json',
-                    type:'post',
-                    success:function (data) {
-                        if (data.success){
-                            window.location.reload();
-                        }else{
-                            layer.msg(data.message);
-                        }
-                    }
-                })
-
+    //监听行工具事件
+    table.on('tool(test)', function(obj){ //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
+        var data = obj.data //获得当前行数据
+            ,layEvent = obj.event; //获得 lay-event 对应的值
+        if(layEvent === 'edit'){
+            editBookType(data);
+        } else if(layEvent === 'del'){
+            layer.confirm('真的删除行么', function(index){
+                del(data.cid,obj,index);
             });
+        }
+    });
+
+    //prompt层
+    //value用于数据回显
+    function editBookType(data1){
+        layer.prompt({title: '修改类别',value:data1.cname, formType: 2}, function(text, index){
+            layer.close(index);
+            $.ajax({
+                url:'',
+                data:{'cid':data1.cid,'cname':text},
+                dataType:'json',
+                type:'post',
+                success:function (data) {
+                    if (data.success){
+                        layer.alert(data.message,function(){
+                            window.parent.location.reload();//刷新父页面
+                            parent.layer.close(index);//关闭弹出层
+                        });
+                    }else{
+                        layer.msg(data.message);
+                    }
+                }
+            })
+
+        });
+    }
+
+    //删除图书类别
+    function del(cid,obj,index){
+
+        $.ajax({
+            url:'delBookType.do?cid='+cid,
+            dataType:'json',
+            type:'post',
+            success:function (data) {
+                if (data.success){
+                    obj.del(); //删除对应行（tr）的DOM结构
+                    layer.close(index);
+                }else{
+                    layer.msg(data.message);
+                }
+            }
+    });
+    }
+    function addType() {
+        layer.open({
+            type: 2,
+            title: '添加图书类型',
+            skin: 'layui-layer-demo', //加上边框
+            area: ['400px', '250px'], //宽高
+            content: 'addBookType.action'
         });
     }
 </script>

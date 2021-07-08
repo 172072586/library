@@ -7,9 +7,9 @@
     <insert id="insertReaderDao" >
         insert into
         reader
-            (reader_id,password,sex,telephone,name,address,age)
+            (reader_id,card_state,sex,telephone,name,address,birthday,password)
         values
-            (#{reader_id},#{password},#{sex},#{telephone},#{name},#{address},#{age})
+            (#{reader_id},#{card_state},#{sex},#{telephone},#{name},#{address},#{birthday},#{password})
     </insert>
 
     <!--验证读者是否存在-->
@@ -22,5 +22,13 @@
             reader_id=#{reader_id} and password=#{password}
     </select>
 
+    <!--管理员添加读者功能读者-->
+    <insert id="submitAddReader" >
+        insert into
+        reader
+            (reader_id,password,sex,telephone,name,address,birthday,card_state)
+        values
+            (#{reader_id},#{password},#{sex},#{telephone},#{name},#{address},#{birthday},#{card_state})
+    </insert>
 
 </mapper>

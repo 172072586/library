@@ -9,7 +9,7 @@ public class Reader implements Serializable {
     private String name;//姓名
     private Integer password = 123;//默认密码
     private String sex;//性别
-    private String age;// 年龄
+    private String birthday;// 出生年月
     private String address;//地址
     private String telephone;//电话
     private Integer card_state;//读者等级/可借阅书籍
@@ -46,12 +46,12 @@ public class Reader implements Serializable {
         this.sex = sex;
     }
 
-    public String getAge() {
-        return age;
+    public String getBirthday() {
+        return birthday;
     }
 
-    public void setAge(String age) {
-        this.age = age;
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
     }
 
     public String getAddress() {
@@ -86,7 +86,7 @@ public class Reader implements Serializable {
                 ", name='" + name + '\'' +
                 ", password=" + password +
                 ", sex='" + sex + '\'' +
-                ", birthday='" + age + '\'' +
+                ", birthday='" + birthday + '\'' +
                 ", address='" + address + '\'' +
                 ", telephone='" + telephone + '\'' +
                 ", card_state=" + card_state +

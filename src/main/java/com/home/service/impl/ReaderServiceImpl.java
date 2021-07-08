@@ -23,4 +23,11 @@ public class ReaderServiceImpl implements ReaderService {
         Reader reader = readerDao.selectReaderDao(reader_id, password);
         return reader;
     }
+
+    //管理员添加读者功能
+    @Override
+    public int submitAddReader(Reader reader) {
+        int result = readerDao.submitAddReader(reader);
+        return result;
+    }
 }

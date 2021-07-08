@@ -29,7 +29,7 @@
                    class="layui-input">
         </div>
         <div class="layui-input-inline">
-            <select name="access" id="access"  lay-verify="required">
+            <select name="access" id="access" required lay-verify="required"autocomplete="off">
                 <option value="">请选择权限</option>
                 <option value="0" >管理员</option>
                 <option value="1" >读者</option>
@@ -45,7 +45,9 @@
 
             <a href="" class="fr">忘记密码？</a>
     </form>
-</div><div id="msg">${msg}</div>
+</div>
+<div id="msg">${msg}</div>
+<div id="error">${error}</div>
 <script type="text/javascript">
     layui.use(['form','layer','jquery'], function () {
         // 操作对象
@@ -57,6 +59,13 @@
         //返回值不为空字符串
         if($("#msg").text() != ""){
             alert("注册成功")
+        }
+    })
+
+    $(function () {
+        //返回值不为空字符串
+        if($("#error").text() != ""){
+            alert("账号密码错误,请重新登录")
         }
     })
 

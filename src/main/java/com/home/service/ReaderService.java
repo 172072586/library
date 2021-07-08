@@ -9,4 +9,7 @@ public interface ReaderService {
     //验证账号是否存在
     Reader queryReader(String reader_id,String password);
 
+    //管理员添加读者功能
+    int submitAddReader(Reader reader);
+
 }
