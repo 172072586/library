@@ -8,7 +8,7 @@
 <html>
 <head>
     <base href="<%=basePath%>"/>
-    <title>添加图书类型页面</title>
+    <title>编辑图书类型页面</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" >
     <link rel="stylesheet" href="css/layui.css"  media="all">
     <link rel="css/modules/laydate/default/laydate.css" >
@@ -25,20 +25,24 @@
     </style>
 </head>
 <body>
-<form class="layui-form" action="addType.action" method="post" id="addbook" lay-filter="example">
+<form class="layui-form" action="editType.action" method="post" id="addbook" lay-filter="example">
     <div class="layui-form-item">
     <div class="layui-form-item layui-form-text">
+        <div class="layui-inline">
+            <label class="layui-form-label">类型编号:</label>
+            <div class="layui-input-inline">
+                <input type="text"  id="cid" name="cid" class="layui-input" readonly value=${cid}>
+            </div>
+        </div>
         <div class="layui-inline">
             <label class="layui-form-label">图书类型：</label>
             <div class="layui-input-inline">
                 <input type="text" id="cname" name="cname" class="layui-input"><br>
-                <input type="submit" value="添加"class="layui-btn"/>
-                <input type="reset" class="layui-btn"/>
+                <input type="submit" id="edit" value="编辑"class="layui-btn"/>
             </div>
-        </div>
+        </div><div id="tipsBookType">${tipsBookType}</div>
     </div>
     </div>
-    <div id="type">${type}</div>
 </form>
 
 <script type="text/javascript">
@@ -49,11 +53,34 @@
 
     });
 
+    //判断返回值是否修改成功
     $(function () {
-        if($("#type").text()!= ""){
-            alert("添加成功");
+        if($("#tipsBookType").text() == "修改成功"){
+            var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+            console.log(index+"--------------------------------"+window.name)
+            parent.layer.close(index);//关闭弹出层
+            alert("修改成功");
+
+        }else if($("#tipsBookType").text()== "修改失败"){
+            alert("修改失败，请检查输入条件");
         }
+
     })
+
+    //修改图书类型功能
+   /* $("#edit").click(function () {
+        var cid = $("#cid").val();
+        var cname = $("#cname").val();
+        $.ajax({
+            url:"editType.action",
+            type:"post",
+            data:{"cid":cid,"cname":cname},
+
+
+        })
+    })*/
+
+
 </script>
 </body>
 </html>

@@ -32,7 +32,7 @@
                 <a href="javascript:;">图书管理</a>
                 <dl class="layui-nav-child">
                     <dd><a href="book.action">图书列表</a></dd>
-                    <dd><a href="bookType.action">分类管理</a></dd>
+                    <dd><a href="bookType.action" >分类管理</a></dd>
                 </dl>
             </li>
             <li class="layui-nav-item"><a href="readerIndex.action">读者列表</a></li>

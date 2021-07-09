@@ -51,7 +51,7 @@
 
     $(function () {
         if($("#type").text()!= ""){
-            alert("注册成功");
+            alert("添加成功");
         }
     })
 </script>

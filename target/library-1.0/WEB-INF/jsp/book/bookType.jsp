@@ -9,118 +9,44 @@
     <base href="<%=basePath%>"/>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <script type="text/javascript" src="js/jquery.js"></script>
-    <script src="js/layui.js"></script>
     <title>图书类别</title>
+    <style type="text/css">
+        button{
+            border-color: unset;
+            height: 35px;
+            width: 55px;
+            color: white;
+            background-color: #28B779;
+            font-size: 20px;
+        }
+
+    </style>
 </head>
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
     <jsp:include page="/WEB-INF/jsp/common/header.jsp" flush="true"/>
 
     <div style="padding-left: 200px;">
-        <a class="layui-btn layui-btn-normal" onclick="addType();">添加类别</a>
-        <table class="layui-hide" id="demo" lay-filter="test"></table>
-
-        <div class="layui-tab-item layui-show">
-            <div id="pageDemo"></div>
-        </div>
+        <a class="layui-btn layui-btn-normal" onclick="addType();" >添加类别</a>
     </div>
-</div>
+    <br>
+    </div>
+    <div style="padding-left: 200px; text-align: center;  color: #808080;">
+        <table width="600px" border="1" style="border-color: #999999">
+            <thead style="height: 50px; width: 100px;font-size: 20px;" >
+            <tr bgcolor="#cccccc" >
+                <td>类别名称</td>
+                <td>操作</td>
+            </tr>
+            </thead >
 
-    <script type="text/html" id="barDemo">
-        <a class="layui-btn layui-btn-sm" lay-event="edit">编辑</a>
-        <a class="layui-btn layui-btn-danger layui-btn-sm" lay-event="del">删除</a>
-    </script>
-    <script src="js/layui.js"></script>
+            <tbody id="tbody" style="height: 500px; width:100px;">
+            </tbody>
+        </table>
+    </div>
 
-<script type="text/javascript">
-    //查询图书类型
-    $(function () {
-        $.ajax({
-            url:'queryType.action',
-            dataType:'json',
-            type:'post',
-            success:function (data) {
-
-            }
-        })
-    })
-
-
-    layui.use(['laypage', 'layer', 'table', 'element','jquery'], function(){
-        laypage = layui.laypage //分页
-            ,layer = layui.layer //弹层
-            ,table = layui.table //表格
-            ,element = layui.element; //元素操作
-        var $ = layui.jquery;
-
-        //执行一个 table 实例
-        table.render({
-            elem: '#demo'
-            ,height: 550
-            ,url: 'type/bookTypeList.do' //数据接口
-            ,title: '图书表'
-            ,cols: [[ //表头
-                {field: 'cname', title: '类别名称', width:300, align:'center'}
-                ,{fixed: 'right',title:'操作', width: 300, align:'center', toolbar: '#barDemo'}
-            ]]
-        });
-
-    });
-    //监听行工具事件
-    table.on('tool(test)', function(obj){ //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
-        var data = obj.data //获得当前行数据
-            ,layEvent = obj.event; //获得 lay-event 对应的值
-        if(layEvent === 'edit'){
-            editBookType(data);
-        } else if(layEvent === 'del'){
-            layer.confirm('真的删除行么', function(index){
-                del(data.cid,obj,index);
-            });
-        }
-    });
-
-    //prompt层
-    //value用于数据回显
-    function editBookType(data1){
-        layer.prompt({title: '修改类别',value:data1.cname, formType: 2}, function(text, index){
-            layer.close(index);
-            $.ajax({
-                url:'',
-                data:{'cid':data1.cid,'cname':text},
-                dataType:'json',
-                type:'post',
-                success:function (data) {
-                    if (data.success){
-                        layer.alert(data.message,function(){
-                            window.parent.location.reload();//刷新父页面
-                            parent.layer.close(index);//关闭弹出层
-                        });
-                    }else{
-                        layer.msg(data.message);
-                    }
-                }
-            })
-
-        });
-    }
-
-    //删除图书类别
-    function del(cid,obj,index){
-
-        $.ajax({
-            url:'delBookType.do?cid='+cid,
-            dataType:'json',
-            type:'post',
-            success:function (data) {
-                if (data.success){
-                    obj.del(); //删除对应行（tr）的DOM结构
-                    layer.close(index);
-                }else{
-                    layer.msg(data.message);
-                }
-            }
-    });
-    }
+<script >
+    /*layUI弹层：增加图书类型*/
     function addType() {
         layer.open({
             type: 2,
@@ -129,6 +55,87 @@
             area: ['400px', '250px'], //宽高
             content: 'addBookType.action'
         });
+    }
+
+    /*layUI弹层功能：修改功能*/
+    function editType(id) {
+        layer.open({
+            type: 2,
+            title: '编辑图书类型',
+            skin: 'layui-layer-demo', //加上边框
+            area: ['400px', '250px'], //宽高
+            content: 'editBookType.action?cid='+id
+        });
+    }
+
+    $(function () {
+        layui.use(['laypage', 'layer', 'table', 'element','jquery'], function(){
+            laypage = layui.laypage //分页
+                ,layer = layui.layer //弹层
+                ,table = layui.table //表格
+                ,element = layui.element; //元素操作
+            var $ = layui.jquery;
+        });
+    })
+
+
+</script>
+<script type="text/javascript">
+    $("button").click(function () {
+        /*queryAllType();*/
+        alert("点击")
+    })
+    $(function () {
+        /*var index = parent.layer.getFrameIndex(window.name);*/ //获取窗口索引
+        //$("#layui-layer-iframe1").close();
+        queryAllType();
+
+
+
+    })
+    //查询图书类别
+    function queryAllType() {
+        var category = "";
+        $.ajax({
+            url:"queryType.action",
+            dataType:"json",
+            type:"post",
+            success:function(data) {
+                $("#tbody").empty();
+                eachType(data);
+            }
+        })
+    }
+
+    //遍历返回的json格式type数据
+    function eachType(data) {
+        var category = "";
+        $.each(data, function(i, n) {
+            /*alert(n.cid+"==="+n.cname);*/
+            var a = "";
+            a+="<tr>" +
+                "<td style='font-size: 20px'>" + n.cname + "</td>" +
+                "<td><button id="+n.cid+" "+"onclick='editType("+n.cid+");'>修改</button>  <button id="+n.cid+" "+
+                "onclick='removeType("+n.cid+");'>删除</button></tr>";
+            category += a;
+        });
+        $("#tbody").append(category);
+    }
+
+    function removeType(id) {
+        var cid = id;
+        var result = confirm("确认删除图书？");
+        if(true){
+            $.ajax({
+                url:"removeType.action",
+                dataType:"json",
+                type:"post",
+                data:{"cid":cid},
+                success:function(data) {
+
+                }
+            })
+        }
     }
 </script>
 </body>

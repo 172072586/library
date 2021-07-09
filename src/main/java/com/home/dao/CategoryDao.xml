@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.home.dao.CategoryDao">
-    <!--sql操作-->
+    <!--增加类别-->
     <insert id="com.home.dao.CategoryDao.insertCname" >
         insert
         into
@@ -11,5 +11,31 @@
         values
             (#{cname})
     </insert>
+
+    <!--查询所有图书类别-->
+    <select id="selectType" resultType="com.home.entity.Category">
+        select
+            cid,cname
+        from
+            category
+    </select>
+
+    <!--修改图书类别-->
+    <update id="updateType">
+        update
+            category
+        set
+            cname = #{cname}
+        where
+            cid = #{cid}
+    </update>
+
+    <!--删除类别-->
+    <delete id="deleteType">
+        delete from
+            category
+        where
+            cid = #{cid}
+    </delete>
 
 </mapper>
