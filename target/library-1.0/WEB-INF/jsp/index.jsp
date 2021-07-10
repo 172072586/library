@@ -14,51 +14,136 @@
     <style>
         .demo-carousel{height: 200px; line-height: 200px; text-align: center;}
     </style>
+    <style type="text/css">
+        button{
+            border-color: unset;
+            height: 35px;
+            width: 55px;
+            color: white;
+            background-color: #28B779;
+            font-size: 20px;
+        }
+
+    </style>
 </head>
-<body class="layui-layout-body">
+<body <%--class="layui-layout-body"--%>>
 <div class="layui-layout layui-layout-admin">
     <jsp:include page="/WEB-INF/jsp/common/header.jsp" flush="true"/>
+</div>
     <!-- 搜索条件表单 -->
-    <div class="demoTable layui-form">
-        <div class="layui-inline">
-            <input class="layui-input" name="bname" id="bname" autocomplete="off"  placeholder="请输入书名">
+
+    <div align="center">
+        <div class="layui-inline ">
+            <input class="layui-input" name="bname" id="name" autocomplete="off"  placeholder="请输入书名">
         </div>
         <div class="layui-inline">
-            <input class="layui-input" name="author" id="author" autocomplete="off" placeholder="请输入作者">
+            <input class="layui-input" name="author" id="author" autocomplete="off"  placeholder="请输入作者">
         </div>
-        <div class="layui-inline">
-            <div class="layui-input-block">
-                <select name="cid" id="cid">
-                    <option value="">请选择书本类别</option>
-                    <c:forEach items="${category}" var="ctg">
-                        <option value="${ctg.cid}">${ctg.cname}</option>
-                    </c:forEach>
-                </select>
-            </div>
-        </div>
-        <button class="layui-btn" data-type="reload">搜索</button>
+        <%--<div class="layui-inline layui-input-block"> <!--获取到数据不显示出来。。。。-->
+            <select  id="typeBtn" onclick="bookType();">
+                <option value="">请选择书本类别</option>
+            </select>
+        </div>--%>
+        <a class="layui-btn" data-type="reload">搜索</a>
         <a style="margin-left: 70px" class="layui-btn layui-btn-normal" onclick="add();">添加图书</a>
     </div>
+
+<br>
+</select>
+<div style=" text-align: center;  color: #808080;">
+    <table width="100%" border="1" style="border-color: #999999">
+        <thead style="height: 45px; font-size: 18px;" >
+        <tr bgcolor="#eff8ff"  >
+            <td>书本编号</td>
+            <td>书名</td>
+            <td>作者</td>
+            <td>出版社</td>
+            <td>出版日期</td>
+            <td>库存(本)</td>
+            <td>价格(元)</td>
+            <td>操作</td>
+        </tr>
+        </thead >
+
+        <tbody id="tbody" style=" font-size: 18px">
+        </tbody>
+    </table>
 </div>
 
-<table class="layui-hide" id="demo" lay-filter="test"></table>
-
-<script type="text/html" id="barDemo">
-    <a class="layui-btn layui-btn-primary layui-btn-sm" lay-event="detail">查看</a>
-    <a class="layui-btn layui-btn-sm" lay-event="edit">编辑</a>
-    <a class="layui-btn layui-btn-danger layui-btn-sm" lay-event="del">删除</a>
-</script>
 
 <script src="js/layui.js"></script>
+
 <script>
-
-
     layui.config({
         version: '1554901098009' //为了更新 js 缓存，可忽略
     });
 
+    layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'element', 'slider'], function() {
+        var laydate = layui.laydate //日期
+            , laypage = layui.laypage //分页
+            , layer = layui.layer //弹层
+            , table = layui.table //表格
+            , carousel = layui.carousel //轮播
+            , upload = layui.upload //上传
+            , element = layui.element //元素操作
+            , slider = layui.slider //滑块
+    })
 
-    function add(){//添加
+
+    $(function () {
+        //进入界面查询所有图书
+        var book = "";
+        $.ajax({
+            url:"findAllBook.action",
+            type:"post",
+            dataType:"json",
+            success:function (data) {
+                /*$("#tbody").empty();*/
+               eachAllBook(data);
+            }
+        })
+    })
+
+    //查询所有图书事件
+    //遍历返回的json格式book数据
+    function eachAllBook(data) {
+        var book = "";
+        $.each(data, function(i, n) {
+            /*alert(n.ISBN);*/
+            var a = "";
+
+            a+="<tr style=height: '100px'><td>"+n.book_id+"</td><td>"+n.name+"</td><td>"+n.author+"</td><td>"+n.publish+"</td><td>"+n.pubdate+"</td><td>"+n.stock+"</td><td>"+n.price+"</td><td>" +
+                "<button id="+n.book_id+" "+"onclick='editBook("+ n.book_id +");'>修改</button>"+" "+"<button id="+n.book_id+" "+ "onclick='removeBook("+n.book_id+");'>删除</button></td></tr>"
+            book += a;
+        });
+        $("#tbody").append(book);
+    }
+
+    //图书类别
+   /* function bookType() {
+       /!* alert("qqqq")*!/
+        $.ajax({
+            url:"queryBookType.action",
+            type:"post",
+            dataType:"json",
+            success:function (data) {
+                /!*$("#tbody").empty();*!/
+                eachType(data);
+            }
+        })
+    }
+
+    //遍历添加图书类别ajax数据添加到控件
+    function eachType(data) {
+        var category = "";
+        $.each(data, function(i, n) {
+            /!*alert(n.cid+"==="+n.cname);*!/
+            category +="<option value="+n.cid+">"+n.cname+"</option>";
+        });
+        $("typeBtn").append(category);
+    }*/
+
+    function add(){//添加弹层
         layer.open({
             type: 2,
             title: '添加图书',
@@ -68,123 +153,33 @@
         });
     }
 
-    layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'element', 'slider'], function(){
-        var laydate = layui.laydate //日期
-            ,laypage = layui.laypage //分页
-            ,layer = layui.layer //弹层
-            ,table = layui.table //表格
-            ,carousel = layui.carousel //轮播
-            ,upload = layui.upload //上传
-            ,element = layui.element //元素操作
-            ,slider = layui.slider //滑块
-
-        //执行一个 table 实例
-        table.render({
-            elem: '#demo'
-            ,height: 550
-            ,url: 'library/listBook.do' //数据接口
-            ,title: '图书表'
-            ,page: true
-            ,limit: 5
-            ,limits: [5,10,15,20]
-            ,cols: [[ //表头
-                {type: 'checkbox', fixed: 'left'}
-                ,{field: 'book_id', title: '书本编号', width:150, sort: true}
-                ,{field: 'name', title: '书名', width:200}
-                ,{field: 'author', title: '作者', width: 200, sort: true}
-                ,{field: 'publish', title: '出版社', width:200, sort: true}
-                ,{field: 'ISBN', title: 'ISBN', width: 150, sort: true}
-                ,{field: 'pubdate', title: '出版日期', width: 120, sort: true}
-                ,{field: 'stock', title: '库存', width: 100}
-                ,{field: 'price', title: '价格', width: 100, sort: true}
-                ,{fixed: 'right', width: 200, align:'center', toolbar: '#barDemo'}
-            ]]
-            //用于搜索结果重载
-            ,id: 'testReload'
+    function editBook(book_id){//修改图书弹层
+        layer.open({
+            type: 2,
+            title: '修改图书',
+            skin: 'layui-layer-demo', //加上边框
+            area: ['800px', '600px'], //宽高
+            content: 'changeBook.action?book_id='+book_id
         });
-        var $ = layui.$, active = {
-            reload: function(){
-                var bname = $('#bname');
-                var author = $('#author');
-                var cid = $('#cid');
-                //执行重载
-                table.reload('testReload', {
-                    //一定要加不然乱码
-                    method: 'post'
-                    ,page: {
-                        curr: 1 //重新从第 1 页开始
-                    }
-                    ,where: {
-                        //bname表示传到后台的参数,bname.val()表示具体数据
-                        bname: bname.val(),
-                        author: author.val(),
-                        cid: cid.val()
-                    }
-                });
-            }
-        };
-        $('.demoTable .layui-btn').on('click', function(){
-            var type = $(this).data('type');
-            active[type] ? active[type].call(this) : '';
-        });
+    }
 
-
-        //监听行工具事件
-        table.on('tool(test)', function(obj){ //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
-            var data = obj.data //获得当前行数据
-                ,layEvent = obj.event; //获得 lay-event 对应的值
-            if(layEvent === 'detail'){
-                find(data);
-            } else if(layEvent === 'del'){
-                layer.confirm('真的删除行么', function(index){
-                    del(data.book_id,obj,index);
-                });
-            } else if(layEvent === 'edit'){
-                edit(data);
-            }
-        });
-        //后边两个参数仅仅是因为要执行动态删除dom
-        function del(book_id,obj,index){
-
+    //删除功能
+    function removeBook(book_id) {
+        var id = book_id;
+        var result = confirm("确认删除图书？");
+        if(true){
             $.ajax({
-                url:'library/delBook.do?book_id='+book_id,
-                dataType:'json',
-                type:'post',
-                success:function (data) {
-                    if (data.success){
-                        obj.del(); //删除对应行（tr）的DOM结构
-                        layer.close(index);
-                    }else{
-                        layer.msg(data.message);
-                    }
+                url:"removeBook.action",
+                dataType:"json",
+                type:"post",
+                data:{"book_id":id},
+                success:function(data) {
+
                 }
             })
         }
+    }
 
-        function edit(data){//修改
-            layer.open({
-                type: 2,
-                title: '修改图书信息',
-                skin: 'layui-layer-demo', //加上边框
-                area: ['800px', '600px'], //宽高
-                method: 'post',
-                content: 'library/editBook.do?'
-                    +'book_id='+data.book_id
-            });
-        }
-
-        function find(data){
-            layer.open({
-                type: 2,
-                title: '查看图书信息',
-                skin: 'layui-layer-demo', //加上边框
-                area: ['800px', '600px'], //宽高
-                method: 'post',
-                content: 'library/findBook.do?'
-                    +'book_id='+data.book_id
-            });
-        }
-    });
 
 </script>
 </body>

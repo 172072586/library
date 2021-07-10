@@ -11,5 +11,30 @@
             (#{name},#{author},#{price},#{pubdate},#{publish},#{ISBN},#{stock},#{cid},#{language},#{introduction})
     </insert>
 
+    <!--查询所有图书-->
+    <select id="selectAllBook" resultType="com.home.entity.Book">
+        select
+            *
+        from
+            book
+    </select>
+
+    <!--修改图书-->
+    <update id="updateBook">
+        update
+            book
+        set
+            price = #{price} , stock = #{stock}
+        where
+            book_id = #{book_id}
+    </update>
+
+    <!--删除图书-->
+    <delete id="deleteBook">
+        delete from
+            book
+        where
+            book_id = #{book_id}
+    </delete>
 
 </mapper>

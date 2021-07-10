@@ -28,13 +28,15 @@
     <ul class="layui-nav layui-layout-left">
 
         <c:if test="${admin!=null}">
-            <li class="layui-nav-item">
+            <%--<li class="layui-nav-item">
                 <a href="javascript:;">图书管理</a>
                 <dl class="layui-nav-child">
                     <dd><a href="book.action">图书列表</a></dd>
                     <dd><a href="bookType.action" >分类管理</a></dd>
                 </dl>
-            </li>
+            </li>--%>
+            <li class="layui-nav-item"><a href="book.action">图书列表</a></li>
+            <li class="layui-nav-item"><a href="bookType.action">类别列表</a></li>
             <li class="layui-nav-item"><a href="readerIndex.action">读者列表</a></li>
             <li class="layui-nav-item"><a href="listDisBackAdmin.action">借阅管理</a></li>
             <li class="layui-nav-item"><a onclick="alterPwd('0');">修改密码</a></li>

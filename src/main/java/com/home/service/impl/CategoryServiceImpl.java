@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
@@ -34,6 +35,8 @@ public class CategoryServiceImpl implements CategoryService {
         int result = categoryDao.deleteType(cid);
         return result;
     }
+
+
 
     //修改图书类别
     @Override

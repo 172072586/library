@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,6 +34,15 @@ public class bookController {
     @RequestMapping("/bookType")
     public String bookType(){
         return "book/bookType";
+    }
+
+    //修改图书页面
+    @RequestMapping("/changeBook")
+    public ModelAndView changeBook(Integer book_id){
+        ModelAndView mv = new ModelAndView();
+        mv.addObject("id",book_id);
+        mv.setViewName("book/editBook");
+        return mv;
     }
 
     //图书列表页面
@@ -70,6 +80,18 @@ public class bookController {
         return mv;
     }
 
+    //查询图书类别  返回数据到index页面
+    @RequestMapping("/queryBookType")
+    @ResponseBody
+    public List<Category> queryBookType(){
+        List<Category> categories = categoryService.queryType();
+        System.out.println(categories);
+        if(categories != null){
+            return categories;
+        }
+        return null;//异常类
+    }
+
     //修改图书类别
     @RequestMapping("/editType")
     public ModelAndView editType(Integer cid,String cname){
@@ -98,14 +120,18 @@ public class bookController {
         return mv;
     }
 
-    //查询所有图书类别功能
+    //查询所有图书类别功能  返回数据到图书类别页面
     @RequestMapping("/queryType")
     @ResponseBody//相应ajax请求返回json数据
     public List<Category> queryType(){
         List<Category> categories = categoryService.queryType();
         //System.out.println(categories);
-        return categories;
+        if(categories != null){
+            return categories;
+        }
+        return null;//异常类
     }
+
 
     //添加图书功能
     @RequestMapping("/submitAddBook")
@@ -115,5 +141,42 @@ public class bookController {
         mv.addObject("msg","添加成功");
         mv.setViewName("book/addBook");
         return mv;
+    }
+
+    //查询所有图书功能
+    @RequestMapping("/findAllBook")
+    @ResponseBody
+    public ArrayList<Book> findAllBook(){
+        ArrayList<Book> books = bookService.queryAllBook();
+        System.out.println(books);
+        if(books != null){
+            System.out.println("执行了返回值判断?");
+            return books;
+        }
+        return null;//未查询到图书异常
+    }
+
+    //修改图书功能
+    @RequestMapping("/submitEditBook")
+    public ModelAndView editBook(Integer book_id, double price, Integer stock){
+        ModelAndView mv = new ModelAndView();
+        int result = bookService.changeBook(book_id,price,stock);
+        if(result == 1){
+            mv.addObject("msg","修改成功");
+        }else{
+            mv.addObject("msg","修改失败");
+        }
+        mv.setViewName("book/editBook");
+        return mv;
+    }
+
+    //删除图书功能
+    @RequestMapping("/removeBook")
+    public ModelAndView removeBook(Integer book_id){
+        System.out.println(book_id);
+        ModelAndView mv = new ModelAndView();
+        int result = bookService.removeBook(book_id);
+
+        return null;
     }
 }

@@ -34,7 +34,7 @@
     <div style="padding-left: 200px; text-align: center;  color: #808080;">
         <table width="600px" border="1" style="border-color: #999999">
             <thead style="height: 50px; width: 100px;font-size: 20px;" >
-            <tr bgcolor="#cccccc" >
+            <tr bgcolor="#eff8ff" >
                 <td>类别名称</td>
                 <td>操作</td>
             </tr>
@@ -81,10 +81,10 @@
 
 </script>
 <script type="text/javascript">
-    $("button").click(function () {
-        /*queryAllType();*/
+    /*$("button").click(function () {
+        /!*queryAllType();*!/
         alert("点击")
-    })
+    })*/
     $(function () {
         /*var index = parent.layer.getFrameIndex(window.name);*/ //获取窗口索引
         //$("#layui-layer-iframe1").close();

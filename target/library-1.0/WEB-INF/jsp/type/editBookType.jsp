@@ -40,7 +40,8 @@
                 <input type="text" id="cname" name="cname" class="layui-input"><br>
                 <input type="submit" id="edit" value="编辑"class="layui-btn"/>
             </div>
-        </div><div id="tipsBookType">${tipsBookType}</div>
+        </div>
+        <div id="tipsBookType">${tipsBookType}</div>
     </div>
     </div>
 </form>

@@ -113,15 +113,8 @@
     </div>
     <div class="layui-form-item">
         <div class="layui-input-block">
-            <c:if test="${bookinfo==null}"><!-- 查看是没有添加按钮的 -->
             <input class="layui-btn" type="submit"/>
             <button type="reset" class="layui-btn layui-btn-primary">重置</button>
-            </c:if>
-            <!-- 修改需要修改按钮是没有添加按钮的 -->
-            <c:if test="${code==1}">
-                <button class="layui-btn" lay-submit="" lay-filter="updatebook">立即修改</button>
-                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
-            </c:if>
         </div>
     </div>
 </form>

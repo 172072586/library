@@ -34,7 +34,7 @@
     <div style="padding-left: 200px; text-align: center;  color: #808080;">
         <table width="600px" border="1" style="border-color: #999999">
             <thead style="height: 50px; width: 100px;font-size: 20px;" >
-            <tr bgcolor="#cccccc" >
+            <tr bgcolor="#eff8ff" >
                 <td>类别名称</td>
                 <td>操作</td>
             </tr>
