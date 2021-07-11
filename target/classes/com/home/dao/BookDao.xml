@@ -6,9 +6,9 @@
     <insert id="insertBook">
         insert into
             book
-            (name,author,price,pubdate,publish,ISBN,stock,cid,language,introduction)
+            (book_name,author,price,pubdate,publish,ISBN,stock,cid,language,introduction)
         values
-            (#{name},#{author},#{price},#{pubdate},#{publish},#{ISBN},#{stock},#{cid},#{language},#{introduction})
+            (#{book_name},#{author},#{price},#{pubdate},#{publish},#{ISBN},#{stock},#{cid},#{language},#{introduction})
     </insert>
 
     <!--查询所有图书-->
@@ -17,6 +17,7 @@
             *
         from
             book
+        limit 10
     </select>
 
     <!--修改图书-->
@@ -37,4 +38,36 @@
             book_id = #{book_id}
     </delete>
 
+    <!--通过name查询图书-->
+    <select id="selectBookName" resultType="com.home.entity.Book">
+        select
+            *
+        from
+            book
+        where
+            name = #{book_name}
+        limit 10
+    </select>
+
+    <!--通过author查询图书-->
+    <select id="selectAuthor" resultType="com.home.entity.Book">
+        select
+            *
+        from
+            book
+        where
+            author = #{author}
+        limit 10
+    </select>
+
+    <!--通过name 和 author 查询图书-->
+    <select id="selectAuthorBookName" resultType="com.home.entity.Book">
+        select
+            *
+        from
+            book
+        where
+            name = #{book_name} and author = #{author}
+        limit 10
+    </select>
 </mapper>

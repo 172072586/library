@@ -6,6 +6,8 @@ import com.home.service.ReaderService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+
 @Service
 public class ReaderServiceImpl implements ReaderService {
     @Resource
@@ -18,10 +20,24 @@ public class ReaderServiceImpl implements ReaderService {
     }
 
     @Override
-    public Reader queryReader(String reader_id, String password) {
+    public Reader queryReader(Integer reader_id, String password) {
         //验证读者是否存在
         Reader reader = readerDao.selectReaderDao(reader_id, password);
         return reader;
+    }
+
+    //删除读者
+    @Override
+    public int loseBook(Integer reader_id) {
+        int result = readerDao.deleteBook(reader_id);
+        return result;
+    }
+
+    //查询所有读者信息
+    @Override
+    public ArrayList<Reader> findReader() {
+        ArrayList<Reader> readers = readerDao.selectReader();
+        return readers;
     }
 
     //管理员添加读者功能

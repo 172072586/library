@@ -10,182 +10,199 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <title>图书管理系统</title>
-
+    <script type="text/javascript" src="js/jquery.js"></script>
     <style>
         .demo-carousel{height: 200px; line-height: 200px; text-align: center;}
     </style>
-    <script type="text/javascript" src="js/jquery.js"></script>
+    <style type="text/css">
+        button{
+            border-color: unset;
+            height: 35px;
+            width: 55px;
+            color: white;
+            background-color: #28B779;
+            font-size: 20px;
+        }
+
+    </style>
 </head>
-<body class="layui-layout-body">
+<body <%--class="layui-layout-body"--%>>
 <div class="layui-layout layui-layout-admin">
     <jsp:include page="/WEB-INF/jsp/common/header.jsp" flush="true"/>
+</div>
+<!-- 搜索条件表单 -->
 
-    <!-- 搜索条件表单 -->
-    <div class="demoTable layui-form">
-        <div class="layui-inline">
-            <input class="layui-input" name="reader_id" id="reader_id" autocomplete="off"  placeholder="请输入读者ID">
-        </div>
-        <div class="layui-inline">
-            <input class="layui-input" name="rname" id="rname" autocomplete="off" placeholder="请输入姓名">
-        </div>
-        <button class="layui-btn" data-type="reload">搜索</button>
-        <a  style="margin-left: 70px"  class="layui-btn layui-btn-normal" onclick="add();">添加读者</a>
+<div align="center">
+    <div class="layui-inline ">
+        <input class="layui-input" name="book_name" id="book_name" autocomplete="off"  placeholder="请输入借阅号">
     </div>
+    <div class="layui-inline">
+        <input class="layui-input" name="author" id="author" autocomplete="off"  placeholder="请输入借阅人">
+    </div>
+    <%--<div class="layui-inline layui-input-block"> <!--获取到数据不显示出来。。。。-->
+        <select  id="typeBtn" onclick="bookType();">
+            <option value="">请选择书本类别</option>
+        </select>
+    </div>--%>
+    <a class="layui-btn" onclick="selectReader();" data-type="reload">搜索</a>
+    <a href="readerIndex.action" class="layui-btn"  data-type="reload">查看所有读者</a>
+    <a style="margin-left: 70px" class="layui-btn layui-btn-normal" onclick="add();">添加读者</a>
 </div>
-<table class="layui-hide" id="demo" lay-filter="test"></table>
 
-<div class="layui-tab-item layui-show">
-    <div id="pageDemo"></div>
+<br>
+</select>
+<div style=" text-align: center;  color: #808080;">
+    <table width="100%" border="1" style="border-color: #999999">
+        <thead style="height: 45px; font-size: 18px;" >
+        <tr bgcolor="#eff8ff"  >
+            <td>借阅号</td>
+            <td>姓名</td>
+            <td>性别</td>
+            <td>生日</td>
+            <td>地址</td>
+            <td>电话</td>
+            <td>读者可借图书</td>
+            <td>操作</td>
+        </tr>
+        </thead >
+
+        <tbody id="tbody" style=" font-size: 18px">
+        </tbody>
+    </table>
 </div>
-<script type="text/html" id="barDemo">
-    <a class="layui-btn layui-btn-primary layui-btn-sm" lay-event="detail">查看</a>
-    <a class="layui-btn layui-btn-sm" lay-event="edit">编辑</a>
-    <a class="layui-btn layui-btn-danger layui-btn-sm" lay-event="del">删除</a>
-</script>
-<script>
-    //JavaScript代码区域
-    layui.use('element', function(){
-        var element = layui.element;
 
-    });
-    var url = ""
-</script>
 
 <script src="js/layui.js"></script>
+
 <script>
     layui.config({
         version: '1554901098009' //为了更新 js 缓存，可忽略
     });
 
-    function add(){//添加
+    layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'element', 'slider'], function() {
+        var laydate = layui.laydate //日期
+            , laypage = layui.laypage //分页
+            , layer = layui.layer //弹层
+            , table = layui.table //表格
+            , carousel = layui.carousel //轮播
+            , upload = layui.upload //上传
+            , element = layui.element //元素操作
+            , slider = layui.slider //滑块
+    })
+
+
+    $(function () {
+        //进入界面查询所有读者
+        var reader = "";
+        $.ajax({
+            url:"findAllReader.action",
+            type:"post",
+            dataType:"json",
+            success:function (data) {
+                /*$("#tbody").empty();*/
+                eachAllReader(data);
+            }
+        })
+    })
+
+    //条件查询
+    function selectBook() {
+        var book_name = $("#book_name").val().trim();
+        var author = $("#author").val().trim();
+        /*alert(name+""+author);*/
+        if (book_name != "" && author != "") {
+            $.ajax({
+                url: "querySomeBook.action",
+                dataType: "json",
+                type: "post",
+                data: {"book_name": book_name, "author": author},
+                success: function (data) {
+                    eachAllBook(data)
+                }
+            })
+        }else if(book_name != "" && author == ""){
+            $.ajax({
+                url: "queryNameBook.action",
+                dataType: "json",
+                type: "post",
+                data: {"book_name": book_name},
+                success: function (data) {
+                    eachAllBook(data)
+                }
+            })
+        }else if(book_name == "" && author != ""){
+            $.ajax({
+                url: "queryAuthorBook.action",
+                dataType: "json",
+                type: "post",
+                data: { "author": author},
+                success: function (data) {
+                    eachAllBook(data)
+                }
+            })
+        }else if (book_name == "" && author == "") {
+            alert("请输入查询条件！")
+        }
+
+
+    }
+    //查询所有图书事件
+    //遍历返回的json格式book数据
+    function eachAllReader(data) {
+        var reader = "";
+        $.each(data, function(i,n) {
+            var a = "";
+            /*a += "<tr style=height: '100px'><td>"+y.reader_id+"</td><td>"+y.reader_name+"</td><td>"+y.sex+"</td><td>"+y.birthday+"</td><td>"+y.address+"</td><td>" +y.telephone+"</td><td>"+y.card_state+"</td>"+
+                 "<button id="+y.reader_id+" "+"onclick='editBook("+ y.reader_id +");'>修改</button>"+" "+"<button id="+y.reader_id+" "+ "onclick='removeBook("+y.reader_id+");'>删除</button></td></tr>";
+            */
+            a += "<tr style=height:36px><td>"+n.reader_id+"</td><td>"+n.reader_name+"</td><td>"+n.sex+"</td><td>"+n.birthday+"</td><td>"+n.address+"</td><td>"+n.telephone+"</td><td>"+n.card_state+"</td><td>"
+                 +"<button id="+n.reader_id+' '+"onclick='editReader("+n.reader_id+");'>修改</button>"+" "+"<button id="+n.reader_id+" "+"onclick='removeReader("+n.reader_id+");'>删除</button></td></tr>";
+            reader += a;
+        });
+        $("#tbody").append(reader);
+    }
+
+
+    function add(){//添加弹层
         layer.open({
             type: 2,
             title: '添加读者',
             skin: 'layui-layer-demo', //加上边框
-            area: ['800px', '500px'], //宽高
+            area: ['800px', '450px'], //宽高
             content: 'addReader.action'
         });
     }
 
-    layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'element', 'slider'], function(){
-        var laydate = layui.laydate //日期
-            ,laypage = layui.laypage //分页
-            ,layer = layui.layer //弹层
-            ,table = layui.table //表格
-            ,carousel = layui.carousel //轮播
-            ,upload = layui.upload //上传
-            ,element = layui.element //元素操作
-            ,slider = layui.slider //滑块
-
-
-        //执行一个 table 实例
-        table.render({
-            elem: '#demo'
-            ,height: 550
-            ,url: 'reader/listReader.do' //数据接口
-            ,title: '图书表'
-            ,page: true
-            ,limit: 6
-            ,limits: [5,10,15,20]
-            ,cols: [[ //表头
-                {type: 'checkbox', fixed: 'left'}
-                ,{field: 'reader_id', title: '读者ID', width:150, sort: true}
-                ,{field: 'name', title: '姓名', width:150}
-                ,{field: 'sex', title: '性别', width: 150}
-                ,{field: 'birthday', title: '生日', width:200, sort: true}
-                ,{field: 'address', title: '地址', width: 300}
-                ,{field: 'telephone', title: '电话', width: 120}
-                ,{field: 'card_state', title: '读者可借图书', width: 150}
-                ,{fixed: 'right', title: '操作',width: 200, align:'center', toolbar: '#barDemo'}
-            ]]
-            //用于搜索结果重载
-            ,id: 'testReload'
+    function editBook(book_id){//修改图书弹层
+        layer.open({
+            type: 2,
+            title: '修改图书',
+            skin: 'layui-layer-demo', //加上边框
+            area: ['800px', '600px'], //宽高
+            content: 'changeBook.action?book_id='+book_id
         });
-        var $ = layui.$, active = {
-            reload: function(){
-                var reader_id = $('#reader_id');
-                var rname = $('#rname');
-                //执行重载
-                table.reload('testReload', {
-                    //一定要加不然乱码
-                    method: 'post'
-                    ,page: {
-                        curr: 1 //重新从第 1 页开始
-                    }
-                    ,where: {
-                        //bname表示传到后台的参数,bname.val()表示具体数据
-                        reader_id: reader_id.val(),
-                        rname: rname.val(),
-                    }
-                });
-            }
-        };
-        $('.demoTable .layui-btn').on('click', function(){
-            var type = $(this).data('type');
-            active[type] ? active[type].call(this) : '';
-        });
+    }
 
-
-        //监听行工具事件
-        table.on('tool(test)', function(obj){ //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
-            var data = obj.data //获得当前行数据
-                ,layEvent = obj.event; //获得 lay-event 对应的值
-            if(layEvent === 'detail'){
-                find(data);
-            } else if(layEvent === 'del'){
-                layer.confirm('真的删除行么', function(index){
-                    del(data.reader_id,obj,index);
-                });
-            } else if(layEvent === 'edit'){
-                edit(data);
-            }
-        });
-//后边两个参数仅仅是因为要执行动态删除dom
-        function del(id,obj,index){
-
+    //删除功能
+    function removeReader(reader_id) {
+        var id = reader_id;
+        var result = confirm("确认删除读者？");
+        if(result == true){
             $.ajax({
-                url:'reader/delReader.do?id='+id,
-                dataType:'json',
-                type:'post',
-                success:function (data) {
-                    if (data.success){
-                        obj.del(); //删除对应行（tr）的DOM结构
-                        layer.close(index);
-                    }else{
-                        layer.msg(data.success);
-                    }
+                url:"removeReader.action",
+                dataType:"json",
+                type:"post",
+                data:{"reader_id":id},
+                success:function(data) {
+                    /*$("#tbody").empty();*/
                 }
             })
         }
+        window.location.reload();
+    }
 
 
-        function edit(data){//修改
-
-            layer.open({
-                type: 2,
-                title: '修改图书信息',
-                skin: 'layui-layer-demo', //加上边框
-                area: ['800px', '500px'], //宽高
-                method: 'post',
-                content: 'reader/editReader.do?'
-                    +'id='+data.id
-            });
-        }
-
-        function find(data){
-            layer.open({
-                type: 2,
-                title: '查看读者信息',
-                skin: 'layui-layer-demo', //加上边框
-                area: ['800px', '500px'], //宽高
-                method: 'post',
-                content: 'reader/findReader.do?'
-                    +'id='+data.id
-            });
-        }
-    });
 
 </script>
-
 </body>
 </html>

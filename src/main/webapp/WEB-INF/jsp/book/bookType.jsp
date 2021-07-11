@@ -114,7 +114,7 @@
             /*alert(n.cid+"==="+n.cname);*/
             var a = "";
             a+="<tr>" +
-                "<td style='font-size: 20px'>" + n.cname + "</td>" +
+                "<td style=font-size:20px;height:36px>" + n.cname + "</td>" +
                 "<td><button id="+n.cid+" "+"onclick='editType("+n.cid+");'>修改</button>  <button id="+n.cid+" "+
                 "onclick='removeType("+n.cid+");'>删除</button></tr>";
             category += a;
@@ -125,17 +125,17 @@
     function removeType(id) {
         var cid = id;
         var result = confirm("确认删除图书？");
-        if(true){
+        if(result==true){
             $.ajax({
                 url:"removeType.action",
                 dataType:"json",
                 type:"post",
                 data:{"cid":cid},
                 success:function(data) {
-
                 }
             })
         }
+        window.location.reload();
     }
 </script>
 </body>

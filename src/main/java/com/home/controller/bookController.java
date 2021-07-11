@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,8 +25,12 @@ public class bookController {
 
     //添加图书页面
     @RequestMapping("/addBook")
-    public String addBook(){
-        return "book/addBook";
+    public ModelAndView addBook(){
+        List<Category> categories = categoryService.queryType();
+        ModelAndView mv = new ModelAndView();
+        mv.addObject("category",categories);
+        mv.setViewName("book/addBook");
+        return mv;
     }
 
     //图书类别页面
@@ -148,9 +151,9 @@ public class bookController {
     @ResponseBody
     public ArrayList<Book> findAllBook(){
         ArrayList<Book> books = bookService.queryAllBook();
-        System.out.println(books);
+        //System.out.println(books);
         if(books != null){
-            System.out.println("执行了返回值判断?");
+            //System.out.println("执行了返回值判断?");
             return books;
         }
         return null;//未查询到图书异常
@@ -167,6 +170,7 @@ public class bookController {
             mv.addObject("msg","修改失败");
         }
         mv.setViewName("book/editBook");
+        //mv.setViewName("forward:/WEB-INF/jsp/index.jsp");
         return mv;
     }
 
@@ -176,7 +180,35 @@ public class bookController {
         System.out.println(book_id);
         ModelAndView mv = new ModelAndView();
         int result = bookService.removeBook(book_id);
+        System.out.println("删除结果"+result);
+        mv.setViewName("index");
+        return mv;
+    }
 
-        return null;
+    //条件查询图书name  和 author
+    @RequestMapping("/querySomeBook")
+    @ResponseBody
+    public List<Book> querySomeBook(@Param("book_name") String book_name,@Param("author") String author){
+        List<Book> books = bookService.queryAuthorBookName(book_name, author);
+        System.out.println(books);
+        return books;
+    }
+
+    //条件查询图书 name
+    @RequestMapping("/queryNameBook")
+    @ResponseBody
+    public ArrayList<Book> queryNameBook(@Param("book_name") String book_name){
+        ArrayList<Book> books = bookService.queryBookName(book_name);
+        System.out.println(books);
+        return books;
+    }
+
+    //条件查询图书 author
+    @RequestMapping("/queryAuthorBook")
+    @ResponseBody
+    public ArrayList<Book> queryAuthorBook(@Param("author") String author){
+        ArrayList<Book> books = bookService.queryAuthor(author);
+        System.out.println(books);
+        return books;
     }
 }

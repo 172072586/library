@@ -63,6 +63,7 @@ public class centerController {
         if(power == 0){//管理员账号
             //验证账号是否存在
             Admin admin = adminService.queryAdmin(name, password);
+            System.out.println(admin);
             if(admin != null){
                 session.setAttribute("admin",admin);
                 mv.setViewName("index");
@@ -70,7 +71,9 @@ public class centerController {
             }
         }else if(power == 1){//读者账号
             //验证账号是否存在
-            Reader reader = readerService.queryReader(name, password);
+            Integer reader_id = Integer.valueOf(name);
+            Reader reader = readerService.queryReader(reader_id, password);
+            System.out.println(reader);
             if(reader != null){
                 session.setAttribute("reader",reader);
                 mv.setViewName("index");

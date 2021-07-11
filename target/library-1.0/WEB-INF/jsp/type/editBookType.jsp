@@ -58,14 +58,12 @@
     $(function () {
         if($("#tipsBookType").text() == "修改成功"){
             var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
-            console.log(index+"--------------------------------"+window.name)
             parent.layer.close(index);//关闭弹出层
             alert("修改成功");
 
         }else if($("#tipsBookType").text()== "修改失败"){
             alert("修改失败，请检查输入条件");
         }
-
     })
 
     //修改图书类型功能

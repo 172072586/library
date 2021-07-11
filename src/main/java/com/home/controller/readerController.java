@@ -4,9 +4,11 @@ import com.home.entity.Reader;
 import com.home.service.ReaderService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 
 @Controller
 public class readerController {
@@ -38,6 +40,23 @@ public class readerController {
         }
         mv.setViewName("reader/addReader");
         return mv;
+    }
+
+    //查询所有读者信息
+    @RequestMapping("/findAllReader")
+    @ResponseBody
+    public ArrayList<Reader> queryReader(){
+        ArrayList<Reader> reader = readerService.findReader();
+        System.out.println(reader);
+        return reader;
+    }
+
+    //删除读者信息
+    @RequestMapping("/removeReader")
+    public ModelAndView removeBook(Integer reader_id){
+        int result = readerService.loseBook(reader_id);
+        System.out.println(result);
+        return null;
     }
 
 

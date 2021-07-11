@@ -9,7 +9,6 @@ public class LendInfo {
     private String readerName;//借阅人
     private String lend_date;//借阅日期
     private String back_date;//归还日期
-    private Double fine;//罚款
     private String state="2";//归还状态
 
 
@@ -52,14 +51,6 @@ public class LendInfo {
 
     public void setBack_date(String back_date) {
         this.back_date = back_date;
-    }
-
-    public Double getFine() {
-        return fine;
-    }
-
-    public void setFine(Double fine) {
-        this.fine = fine;
     }
 
     public String getState() {

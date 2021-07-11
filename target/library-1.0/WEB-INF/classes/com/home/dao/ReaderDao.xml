@@ -3,13 +3,22 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.home.dao.ReaderDao">
 
+    <!--查询所有读者功能-->
+    <select id="selectReader" resultType="com.home.entity.Reader">
+        SELECT
+		    *
+        FROM
+	        reader
+        limit 10
+    </select>
+
     <!--注册读者-->
     <insert id="insertReaderDao" >
         insert into
         reader
-            (reader_id,card_state,sex,telephone,name,address,birthday,password)
+            (reader_id,card_state,sex,telephone,reader_name,address,birthday,password)
         values
-            (#{reader_id},#{card_state},#{sex},#{telephone},#{name},#{address},#{birthday},#{password})
+            (#{reader_id},#{card_state},#{sex},#{telephone},#{reader_name},#{address},#{birthday},#{password})
     </insert>
 
     <!--验证读者是否存在-->
@@ -26,9 +35,20 @@
     <insert id="submitAddReader" >
         insert into
         reader
-            (reader_id,password,sex,telephone,name,address,birthday,card_state)
+            (reader_id,password,sex,telephone,reader_name,address,birthday,card_state)
         values
-            (#{reader_id},#{password},#{sex},#{telephone},#{name},#{address},#{birthday},#{card_state})
+            (#{reader_id},#{password},#{sex},#{telephone},#{reader_name},#{address},#{birthday},#{card_state})
     </insert>
+
+    <!--删除读者-->
+    <delete id="deleteBook">
+        delete from
+            reader
+        where
+            reader_id = #{reader_id}
+    </delete>
+
+
+
 
 </mapper>

@@ -34,7 +34,7 @@
 
     <div align="center">
         <div class="layui-inline ">
-            <input class="layui-input" name="bname" id="name" autocomplete="off"  placeholder="请输入书名">
+            <input class="layui-input" name="book_name" id="book_name" autocomplete="off"  placeholder="请输入书名">
         </div>
         <div class="layui-inline">
             <input class="layui-input" name="author" id="author" autocomplete="off"  placeholder="请输入作者">
@@ -44,8 +44,11 @@
                 <option value="">请选择书本类别</option>
             </select>
         </div>--%>
-        <a class="layui-btn" data-type="reload">搜索</a>
+        <a class="layui-btn" onclick="selectBook();" data-type="reload">搜索</a>
+        <a href="book.action" class="layui-btn"  data-type="reload">查看所有图书</a>
+        <c:if test="${admin!=null}">
         <a style="margin-left: 70px" class="layui-btn layui-btn-normal" onclick="add();">添加图书</a>
+        </c:if>
     </div>
 
 <br>
@@ -61,7 +64,9 @@
             <td>出版日期</td>
             <td>库存(本)</td>
             <td>价格(元)</td>
+            <c:if test="${admin!=null}">
             <td>操作</td>
+            </c:if>
         </tr>
         </thead >
 
@@ -104,44 +109,76 @@
         })
     })
 
+    //条件查询
+    function selectBook() {
+        var name = $("#book_name").val().trim();
+        var author = $("#author").val().trim();
+        /*alert(name+""+author);*/
+        if (name != "" && author != "") {
+            $.ajax({
+                url: "querySomeBook.action",
+                dataType: "json",
+                type: "post",
+                data: {"book_name": book_name, "author": author},
+                success: function (data) {
+                    eachAllBook(data)
+                }
+            })
+        }else if(book_name != "" && author == ""){
+            $.ajax({
+                url: "queryNameBook.action",
+                dataType: "json",
+                type: "post",
+                data: {"book_name": book_name},
+                success: function (data) {
+                    eachAllBook(data)
+                }
+            })
+        }else if(book_name == "" && author != ""){
+            $.ajax({
+                url: "queryAuthorBook.action",
+                dataType: "json",
+                type: "post",
+                data: { "author": author},
+                success: function (data) {
+                    eachAllBook(data)
+                }
+            })
+        }else if (book_name == "" && author == "") {
+            alert("请输入查询条件！")
+        }
+
+
+    }
     //查询所有图书事件
     //遍历返回的json格式book数据
     function eachAllBook(data) {
-        var book = "";
-        $.each(data, function(i, n) {
-            /*alert(n.ISBN);*/
-            var a = "";
+        var user = $("#user").text();
+        if(user == "图书后台管理系统"){
+            var book = "";
+            $.each(data, function(i, n) {
+                var a = "";
+                a += "<tr><td>"+n.book_id+"</td><td>"+n.book_name+"</td><td>"+n.author+"</td><td>"+n.publish+"</td><td>"+n.pubdate+"</td><td>"+n.stock+"</td><td>"+n.price+"</td><td>" +
+                    "<button id="+n.book_id+" "+"onclick='editBook("+ n.book_id +");'>修改</button>"+" "+"<button id="+n.book_id+" "+ "onclick='removeBook("+n.book_id+");'>删除</button></td></tr>"
+                book += a;
+            });
+            $("#tbody").empty();
+            $("#tbody").append(book);
+        }else if(user == "图书管理系统"){
+            var book = "";
+            $.each(data, function(i, n) {
+                var a = "";
+                a += "<tr style='height: 36px'><td>"+n.book_id+"</td><td>"+n.book_name+"</td><td>"+n.author+"</td><td>"+n.publish+"</td><td>"+n.pubdate+"</td><td>"+n.stock+"</td><td>"+n.price+"</td><td>"
+                book += a;
+            });
+            $("#tbody").empty();
+            $("#tbody").append(book);
+        }
 
-            a+="<tr style=height: '100px'><td>"+n.book_id+"</td><td>"+n.name+"</td><td>"+n.author+"</td><td>"+n.publish+"</td><td>"+n.pubdate+"</td><td>"+n.stock+"</td><td>"+n.price+"</td><td>" +
-                "<button id="+n.book_id+" "+"onclick='editBook("+ n.book_id +");'>修改</button>"+" "+"<button id="+n.book_id+" "+ "onclick='removeBook("+n.book_id+");'>删除</button></td></tr>"
-            book += a;
-        });
-        $("#tbody").append(book);
+
+
     }
 
-    //图书类别
-   /* function bookType() {
-       /!* alert("qqqq")*!/
-        $.ajax({
-            url:"queryBookType.action",
-            type:"post",
-            dataType:"json",
-            success:function (data) {
-                /!*$("#tbody").empty();*!/
-                eachType(data);
-            }
-        })
-    }
-
-    //遍历添加图书类别ajax数据添加到控件
-    function eachType(data) {
-        var category = "";
-        $.each(data, function(i, n) {
-            /!*alert(n.cid+"==="+n.cname);*!/
-            category +="<option value="+n.cid+">"+n.cname+"</option>";
-        });
-        $("typeBtn").append(category);
-    }*/
 
     function add(){//添加弹层
         layer.open({
@@ -167,19 +204,19 @@
     function removeBook(book_id) {
         var id = book_id;
         var result = confirm("确认删除图书？");
-        if(true){
+        if(result==true){
             $.ajax({
                 url:"removeBook.action",
                 dataType:"json",
                 type:"post",
                 data:{"book_id":id},
                 success:function(data) {
-
+                    /*$("#tbody").empty();*/
                 }
             })
         }
+        window.location.reload();
     }
-
 
 </script>
 </body>

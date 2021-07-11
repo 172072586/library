@@ -6,13 +6,14 @@ import java.io.Serializable;
 public class Reader implements Serializable {
     private Integer id;//编号
     private Integer reader_id;//登陆名/读者id
-    private String name;//姓名
-    private Integer password = 123;//默认密码
+    private String reader_name;//姓名
+    private Integer password;//默认密码
     private String sex;//性别
     private String birthday;// 出生年月
     private String address;//地址
     private String telephone;//电话
     private Integer card_state;//读者等级/可借阅书籍
+
 
     public Integer getReader_id() {
         return reader_id;
@@ -22,12 +23,12 @@ public class Reader implements Serializable {
         this.reader_id = reader_id;
     }
 
-    public String getName() {
-        return name;
+    public String getReader_name() {
+        return reader_name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setReader_name(String reader_name) {
+        this.reader_name = reader_name;
     }
 
     public Integer getPassword() {
@@ -83,7 +84,7 @@ public class Reader implements Serializable {
         return "Reader{" +
                 "id=" + id +
                 ", reader_id=" + reader_id +
-                ", name='" + name + '\'' +
+                ", reader_name='" + reader_name + '\'' +
                 ", password=" + password +
                 ", sex='" + sex + '\'' +
                 ", birthday='" + birthday + '\'' +

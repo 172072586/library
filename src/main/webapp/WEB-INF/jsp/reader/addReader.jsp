@@ -39,14 +39,14 @@
         <div class="layui-inline">
             <label class="layui-form-label">姓名：</label>
             <div class="layui-input-inline">
-                <input type="text" id="name" name="name" required lay-verify="required" placeholder="请输入姓名" autocomplete="off" class="layui-input">
+                <input type="text" id="reader_name" name="reader_name" required lay-verify="required" placeholder="请输入姓名" autocomplete="off" class="layui-input">
                 <div id="errorName" style="color: red"></div>
             </div>
         </div>
     </div>
     <div class="layui-form-item">
         <div class="layui-inline">
-            <c:set  var="sex" value="${reader.sex}" />
+            <%--<c:set  var="sex" value="${reader.sex}" />--%>
             <label class="layui-form-label">性别：</label>
             <div class="layui-input-block" >
                 <select name="sex" id="sex" required lay-verify="required">
@@ -90,22 +90,15 @@
         <div class="layui-inline">
             <label class="layui-form-label">密码：</label>
             <div class="layui-input-inline">
-                <input type="text" id="pwd" name="passwor" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+                <input type="text" id="pwd" name="password" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
                 <div id="errorPwd" style="color: red"></div>
             </div>
         </div>
     </div>
     <div class="layui-form-item">
         <div class="layui-input-block">
-            <c:if test="${reader==null}"><!-- 查看是没有添加按钮的 -->
             <input type="submit" class="layui-btn"/>
             <input type="reset" class="layui-btn"/>
-            </c:if>
-            <!-- 修改需要修改按钮是没有添加按钮的 -->
-            <c:if test="${code==1}">
-                <button class="layui-btn" lay-submit="" required lay-filter="updatereader">立即修改</button>
-                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
-            </c:if>
         </div>
     </div>
 </form>
@@ -125,7 +118,7 @@
     })
 </script>
 <script type="text/javascript">
-    <!--管理员添加读者功能js-->
+    <!--添加读者功能js-->
     $(function () {
         if($("#msg").text() == "添加成功"){
             var index = parent.layer.getFrameIndex(window.name); //获取窗口索引

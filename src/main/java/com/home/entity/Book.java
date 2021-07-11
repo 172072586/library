@@ -3,7 +3,7 @@ package com.home.entity;
 //书籍信息
 public class Book {
     private Integer book_id;// 书本编号
-    private String name;//书名
+    private String book_name;//书名
     private String author;//作者
     private String publish;// 出版社
     private String ISBN;//国际标准图书编号
@@ -25,12 +25,12 @@ public class Book {
         this.book_id = book_id;
     }
 
-    public String getName() {
-        return name;
+    public String getBook_name() {
+        return book_name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setBook_name(String book_name) {
+        this.book_name = book_name;
     }
 
     public String getAuthor() {
@@ -117,7 +117,7 @@ public class Book {
     public String toString() {
         return "Book{" +
                 "book_id=" + book_id +
-                ", name='" + name + '\'' +
+                ", book_name='" + book_name + '\'' +
                 ", author='" + author + '\'' +
                 ", publish='" + publish + '\'' +
                 ", ISBN='" + ISBN + '\'' +

@@ -23,7 +23,12 @@
 </head>
 <body>
 <div class="layui-header">
-    <div class="layui-logo">图书管理系统</div>
+    <c:if test="${admin!=null}">
+        <div class="layui-logo" id="user">图书后台管理系统</div>
+    </c:if>
+    <c:if test="${reader!=null}">
+        <div class="layui-logo" id="user">图书管理系统</div>
+    </c:if>
     <!-- 头部区域（可配合layui已有的水平导航） -->
     <ul class="layui-nav layui-layout-left">
 
@@ -52,7 +57,7 @@
         <li class="layui-nav-item">
             <a href="javascript:;">
                 <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
-                ${reader.name }
+                ${reader.reader_name }
                ${admin.name}
             </a>
         </li>

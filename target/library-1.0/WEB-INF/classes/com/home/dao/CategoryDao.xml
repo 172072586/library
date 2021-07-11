@@ -18,6 +18,7 @@
             cid,cname
         from
             category
+        limit 10
     </select>
 
     <!--修改图书类别-->

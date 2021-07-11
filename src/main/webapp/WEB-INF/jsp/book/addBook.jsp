@@ -31,7 +31,7 @@
         <div class="layui-inline">
             <label class="layui-form-label">书名：</label>
             <div class="layui-input-inline">
-                <input type="text" name="name"  required lay-verify="required" placeholder="请输入书名" autocomplete="off" class="layui-input">
+                <input type="text" name="book_name"  required lay-verify="required" placeholder="请输入书名" autocomplete="off" class="layui-input">
             </div>
         </div>
         <div class="layui-inline">
@@ -77,13 +77,10 @@
             </div>
         </div>
         <div class="layui-inline">
-            <!-- 两个变量都来自后台,下拉框回显需要用到 -->
-            <c:set  var="bcid" value="${bookinfo.cid}" />
             <label class="layui-form-label">书本类别：</label>
             <div class="layui-input-block" >
                 <select name="cid" id="class_id" required lay-verify="required">
                     <option value="">请选择书本类别</option>
-                    <option value="25" >未知</option>
                     <c:forEach items="${category}" var="ctg">
                         <option value="${ctg.cid}" <c:if test="${ctg.cid==bcid}">selected</c:if>>${ctg.cname}</option>
                     </c:forEach>
@@ -139,6 +136,7 @@
             var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
             parent.layer.close(index);//关闭弹出层
             alert("添加成功");
+
         }else if($("#addmsg").text() == "添加失败"){
             alert("添加失败 请重新添加");
         }

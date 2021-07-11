@@ -4,6 +4,7 @@ import com.home.entity.Book;
 import com.home.entity.Category;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public interface BookService {
     //添加图书
@@ -17,4 +18,13 @@ public interface BookService {
 
     //删除图书
     int removeBook(Integer book_id);
+
+    //通过图书名字查询图书
+    ArrayList<Book> queryBookName(String book_name);
+
+    //通过作者查询图书
+    ArrayList<Book> queryAuthor(String author);
+
+    //通过图书名字和作者查询图书
+    List<Book> queryAuthorBookName(String book_name,String author);
 }
