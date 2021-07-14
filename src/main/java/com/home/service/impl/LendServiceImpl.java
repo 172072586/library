@@ -46,6 +46,7 @@ public class LendServiceImpl implements LendService {
         return lendInfos;
     }
 
+
     //借阅图书  默认事务异常回滚
     @Override
     public int submitLendBook(String reader_name, Integer book_id) {
