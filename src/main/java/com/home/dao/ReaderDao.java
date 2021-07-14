@@ -20,4 +20,16 @@ public interface ReaderDao {
 
     //删除读者
     int deleteBook(Integer reader_id);
+
+    //按借阅号和读者名查询
+    ArrayList<Reader> selectSomeReader(@Param("reader_id") Integer reader_id,@Param("reader_name") String reader_name);
+
+    //按读者id查询
+    ArrayList<Reader> selectIdReader(@Param("reader_id") Integer reader_id);
+
+    //按借阅名查询
+    ArrayList<Reader> selectNameReader(@Param("reader_name")String name_id);
+
+    //修改读者
+    int updateReader(Reader reader);
 }

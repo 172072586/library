@@ -19,4 +19,17 @@ public interface ReaderService {
 
     //删除读者
     int loseBook(Integer reader_id);
+
+    //按借阅号和读者名查询
+    ArrayList<Reader> findSomeReader(Integer reader_id,String reader_name);
+
+    //按读者id查询
+    ArrayList<Reader> findIdReader(Integer reader_id);
+
+    //按借阅名查询
+    ArrayList<Reader> findNameReader(String reader_name);
+
+    //修改读者信息
+    int editReader(Reader reader);
+
 }

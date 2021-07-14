@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.home.dao.LendInfoDao">
+    <!--sql操作-->
+    <!--通过id查询图书名和库存-->
+    <select id="lendIdBook" resultType="com.home.entity.Book">
+        select
+            book_name
+        from
+            book
+        where
+            book_id = #{book_id}
+    </select>
+
+    <!--添加借阅记录-->
+    <insert id="insertLendInfoDao">
+        insert into
+            lend_info
+            (reader_name,book_id,book_name,lend_date,state)
+        values
+            (#{reader_name},#{book_id},#{book_name},#{lend_date},#{state})
+    </insert>
+
+    <!--查询借阅记录-->
+    <select id="selectLendInfo" resultType="com.home.entity.LendInfo">
+        select
+            *
+        from
+            lend_info
+    </select>
+
+    <!--根据书名和借阅状态查询借阅记录-->
+    <select id="selectInfo" resultType="com.home.entity.LendInfo">
+        select
+            *
+        from
+            lend_info
+        where
+            book_name = #{book_name} and state = #{state}
+    </select>
+
+    <!--根据书名查询借阅记录-->
+    <select id="selectLendName" resultType="com.home.entity.LendInfo">
+        select
+            *
+        from
+            lend_info
+        where
+            book_name = #{book_name}
+    </select>
+
+    <!--根据借阅状态查询借阅记录-->
+    <select id="selectLendState" resultType="com.home.entity.LendInfo">
+        select
+            *
+        from
+            lend_info
+        where
+            state = #{state}
+    </select>
+
+    <!--通过读者和书id查询借阅状态-->
+    <select id="selectReaderBook" resultType="com.home.entity.LendInfo">
+        select
+            state
+        from
+            lend_info
+        where
+            reader_name = #{reader_name} and book_id = #{book_id}
+    </select>
+</mapper>

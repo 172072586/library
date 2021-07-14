@@ -26,7 +26,7 @@
     </style>
 </head>
 <body>
-<form class="layui-form" action="submitAddReader.action" method="post" id="addbook" lay-filter="example">
+<form class="layui-form" action="submitAddReader.action" method="post" id="addReader" lay-filter="example">
     <div class="layui-form-item">
 
         <div class="layui-inline">

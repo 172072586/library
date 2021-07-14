@@ -64,9 +64,7 @@
             <td>出版日期</td>
             <td>库存(本)</td>
             <td>价格(元)</td>
-            <c:if test="${admin!=null}">
             <td>操作</td>
-            </c:if>
         </tr>
         </thead >
 
@@ -111,10 +109,10 @@
 
     //条件查询
     function selectBook() {
-        var name = $("#book_name").val().trim();
+        var book_name = $("#book_name").val().trim();
         var author = $("#author").val().trim();
         /*alert(name+""+author);*/
-        if (name != "" && author != "") {
+        if (book_name != "" && author != "") {
             $.ajax({
                 url: "querySomeBook.action",
                 dataType: "json",
@@ -168,7 +166,8 @@
             var book = "";
             $.each(data, function(i, n) {
                 var a = "";
-                a += "<tr style='height: 36px'><td>"+n.book_id+"</td><td>"+n.book_name+"</td><td>"+n.author+"</td><td>"+n.publish+"</td><td>"+n.pubdate+"</td><td>"+n.stock+"</td><td>"+n.price+"</td><td>"
+                a += "<tr style='height: 36px'><td>"+n.book_id+"</td><td>"+n.book_name+"</td><td>"+n.author+"</td><td>"+n.publish+"</td><td>"+n.pubdate+"</td><td>"+n.stock+"</td><td>"+n.price+"</td>" +
+                    "<td><button id="+n.book_name+" "+"onclick='lendBook("+n.book_id+");'>借阅</button></td></tr>";
                 book += a;
             });
             $("#tbody").empty();
@@ -179,6 +178,26 @@
 
     }
 
+    //借阅图书事件
+    function lendBook(book_id) {
+        var reader_name = $("#use").text().trim();
+        /*alert(reader_name)*/
+        $.ajax({
+            url:"lendBook.action",
+            type:"post",
+            dataType:"text",
+            data:{"book_id":book_id,"reader_name":reader_name},
+            success:function (data) {
+                if(data == 1){
+                    alert("借阅成功")
+                }else if(data == 3){
+                    alert("已经借阅请勿重复借阅")
+                }else{
+                    alert("借阅失败")
+                }
+            }
+        })
+    }
 
     function add(){//添加弹层
         layer.open({

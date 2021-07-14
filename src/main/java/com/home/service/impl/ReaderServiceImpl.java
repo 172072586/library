@@ -19,6 +19,33 @@ public class ReaderServiceImpl implements ReaderService {
         return readerDao.insertReaderDao(reader);
     }
 
+    //按借阅号和读者名查询
+    @Override
+    public ArrayList<Reader> findSomeReader(Integer reader_id, String reader_name) {
+        ArrayList<Reader> readers = readerDao.selectSomeReader(reader_id, reader_name);
+        return readers;
+    }
+
+    //按读者id查询
+    @Override
+    public ArrayList<Reader> findIdReader(Integer reader_id) {
+        ArrayList<Reader> readers = readerDao.selectIdReader(reader_id);
+        return readers;
+    }
+
+    //按借阅名查询
+    @Override
+    public ArrayList<Reader> findNameReader(String reader_name) {
+        ArrayList<Reader> readers = readerDao.selectNameReader(reader_name);
+        return readers;
+    }
+    //修改读者信息
+    @Override
+    public int editReader(Reader reader) {
+        int result = readerDao.updateReader(reader);
+        return result;
+    }
+
     @Override
     public Reader queryReader(Integer reader_id, String password) {
         //验证读者是否存在

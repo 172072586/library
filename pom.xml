@@ -39,7 +39,7 @@
       <artifactId>spring-tx</artifactId>
       <version>5.2.5.RELEASE</version>
     </dependency>
-    <!--事务相关的-->
+    <!--spring事务相关的-->
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-jdbc</artifactId>
@@ -110,7 +110,16 @@
       <artifactId>jstl</artifactId>
       <version>1.2</version>
     </dependency>
+
+    <!--aspectj依赖:事务-->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-aspects</artifactId>
+      <version>5.2.5.RELEASE</version>
+    </dependency>
+
   </dependencies>
+
 
 
   <!--插件-->

@@ -48,7 +48,44 @@
             reader_id = #{reader_id}
     </delete>
 
+    <!--按id和姓名查询读者-->
+    <select id="selectSomeReader" resultType="com.home.entity.Reader">
+        select
+            *
+        from
+            reader
+        where
+            reader_id = #{reader_id} and reader_name = #{reader_name}
+    </select>
 
+    <!--按姓名查询读者-->
+    <select id="selectNameReader" resultType="com.home.entity.Reader">
+        select
+            *
+        from
+            reader
+        where
+            reader_name = #{reader_name}
+    </select>
 
+    <!--按id查询读者-->
+    <select id="selectIdReader" resultType="com.home.entity.Reader">
+        select
+            *
+        from
+            reader
+        where
+            reader_id = #{reader_id}
+    </select>
+
+    <!--修改读者-->
+    <update id="updateReader">
+        update
+            reader
+        set
+            reader_id=#{reader_id},password=#{password},sex=#{sex},telephone=#{telephone},reader_name=#{reader_name},address=#{address},birthday=#{birthday},card_state=#{card_state}
+        where
+             reader_id=#{reader_id}
+    </update>
 
 </mapper>

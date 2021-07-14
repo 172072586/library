@@ -3,14 +3,12 @@ package com.home.entity;
 //借阅信息
 public class LendInfo {
     private Integer id;
-    private Integer reader_id;//借阅号
+    private String book_name;
     private Integer book_id;
-    private String bookName;//书
-    private String readerName;//借阅人
+    private String reader_name;//借阅人
     private String lend_date;//借阅日期
     private String back_date;//归还日期
-    private String state="2";//归还状态
-
+    private String state;//归还状态
 
 
     public Integer getId() {
@@ -21,12 +19,12 @@ public class LendInfo {
         this.id = id;
     }
 
-    public Integer getReader_id() {
-        return reader_id;
+    public String getBook_name() {
+        return book_name;
     }
 
-    public void setReader_id(Integer reader_id) {
-        this.reader_id = reader_id;
+    public void setBook_name(String book_name) {
+        this.book_name = book_name;
     }
 
     public Integer getBook_id() {
@@ -35,6 +33,14 @@ public class LendInfo {
 
     public void setBook_id(Integer book_id) {
         this.book_id = book_id;
+    }
+
+    public String getReader_name() {
+        return reader_name;
+    }
+
+    public void setReader_name(String reader_name) {
+        this.reader_name = reader_name;
     }
 
     public String getLend_date() {
@@ -59,21 +65,5 @@ public class LendInfo {
 
     public void setState(String state) {
         this.state = state;
-    }
-
-    public String getBookName() {
-        return bookName;
-    }
-
-    public void setBookName(String bookName) {
-        this.bookName = bookName;
-    }
-
-    public String getReaderName() {
-        return readerName;
-    }
-
-    public void setReaderName(String readerName) {
-        this.readerName = readerName;
     }
 }

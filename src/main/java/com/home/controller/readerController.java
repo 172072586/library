@@ -28,6 +28,15 @@ public class readerController {
         return "reader/addReader";
     }
 
+    //修改读者页面
+    @RequestMapping("/changeReader")
+    public ModelAndView changeReader(Integer reader_id){
+        ModelAndView mv = new ModelAndView();
+        mv.addObject("reader_id",reader_id);
+        mv.setViewName("reader/changeReader");
+        return mv;
+    }
+
     //管理员添加读者功能
     @RequestMapping("/submitAddReader")
     public ModelAndView submitAddReader(Reader reader){
@@ -53,9 +62,50 @@ public class readerController {
 
     //删除读者信息
     @RequestMapping("/removeReader")
+    @ResponseBody
     public ModelAndView removeBook(Integer reader_id){
         int result = readerService.loseBook(reader_id);
         System.out.println(result);
+        return null;
+    }
+
+    //按借阅号和读者名查询
+    @RequestMapping("/querySomeReader")
+    @ResponseBody
+    public ArrayList<Reader> querySomeReader(Integer reader_id,String reader_name){
+        System.out.println(reader_name+"接收参数");
+        ArrayList<Reader> readers = readerService.findSomeReader(reader_id, reader_name);
+        System.out.println(readers);
+        return readers;
+    }
+
+    //按读者id查询
+    @RequestMapping("/queryIdReader")
+    @ResponseBody
+    public ArrayList<Reader> queryIdReader(Integer reader_id){
+        System.out.println(reader_id+"接收参数");
+        ArrayList<Reader> readers = readerService.findIdReader(reader_id);
+        System.out.println(readers);
+        return readers;
+    }
+
+    //按借阅名查询
+    @RequestMapping("/queryNameReader")
+    @ResponseBody
+    public ArrayList<Reader> queryNameReader(String reader_name){
+        System.out.println(reader_name+"接收参数");
+        ArrayList<Reader> readers = readerService.findNameReader(reader_name);
+        System.out.println(readers);
+        return readers;
+    }
+
+    //修改读者信息
+    @RequestMapping("/submitEditReader")
+    @ResponseBody
+    public ModelAndView submitEditReader(Reader reader){
+        System.out.println(reader+"接收参数");
+        readerService.editReader(reader);
+        System.out.println();
         return null;
     }
 

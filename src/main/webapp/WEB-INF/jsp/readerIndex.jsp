@@ -34,16 +34,12 @@
 
 <div align="center">
     <div class="layui-inline ">
-        <input class="layui-input" name="book_name" id="book_name" autocomplete="off"  placeholder="请输入借阅号">
+        <input class="layui-input" name="reader_id" id="reader_id" autocomplete="off"  placeholder="请输入借阅号">
     </div>
     <div class="layui-inline">
-        <input class="layui-input" name="author" id="author" autocomplete="off"  placeholder="请输入借阅人">
+        <input class="layui-input" name="reader_name" id="reader_name" autocomplete="off"  placeholder="请输入借阅人">
     </div>
-    <%--<div class="layui-inline layui-input-block"> <!--获取到数据不显示出来。。。。-->
-        <select  id="typeBtn" onclick="bookType();">
-            <option value="">请选择书本类别</option>
-        </select>
-    </div>--%>
+
     <a class="layui-btn" onclick="selectReader();" data-type="reload">搜索</a>
     <a href="readerIndex.action" class="layui-btn"  data-type="reload">查看所有读者</a>
     <a style="margin-left: 70px" class="layui-btn layui-btn-normal" onclick="add();">添加读者</a>
@@ -106,41 +102,41 @@
     })
 
     //条件查询
-    function selectBook() {
-        var book_name = $("#book_name").val().trim();
-        var author = $("#author").val().trim();
+    function selectReader() {
+        var reader_id = $("#reader_id").val().trim();
+        var reader_name = $("#reader_name").val().trim();
         /*alert(name+""+author);*/
-        if (book_name != "" && author != "") {
+        if (reader_id != "" && reader_name != "") {
             $.ajax({
-                url: "querySomeBook.action",
+                url: "querySomeReader.action",
                 dataType: "json",
                 type: "post",
-                data: {"book_name": book_name, "author": author},
+                data: {"reader_id": reader_id, "reader_name": reader_name},
                 success: function (data) {
-                    eachAllBook(data)
+                    eachAllReader(data)
                 }
             })
-        }else if(book_name != "" && author == ""){
+        }else if(reader_id != "" && reader_name == ""){
             $.ajax({
-                url: "queryNameBook.action",
+                url: "queryIdReader.action",
                 dataType: "json",
                 type: "post",
-                data: {"book_name": book_name},
+                data: {"reader_id": reader_id},
                 success: function (data) {
-                    eachAllBook(data)
+                    eachAllReader(data)
                 }
             })
-        }else if(book_name == "" && author != ""){
+        }else if(reader_id == "" && reader_name != ""){
             $.ajax({
-                url: "queryAuthorBook.action",
+                url: "queryNameReader.action",
                 dataType: "json",
                 type: "post",
-                data: { "author": author},
+                data: { "reader_name": reader_name},
                 success: function (data) {
-                    eachAllBook(data)
+                    eachAllReader(data)
                 }
             })
-        }else if (book_name == "" && author == "") {
+        }else if (reader_id == "" && reader_name == "") {
             alert("请输入查询条件！")
         }
 
@@ -159,6 +155,7 @@
                  +"<button id="+n.reader_id+' '+"onclick='editReader("+n.reader_id+");'>修改</button>"+" "+"<button id="+n.reader_id+" "+"onclick='removeReader("+n.reader_id+");'>删除</button></td></tr>";
             reader += a;
         });
+        $("#tbody").empty();
         $("#tbody").append(reader);
     }
 
@@ -173,13 +170,13 @@
         });
     }
 
-    function editBook(book_id){//修改图书弹层
+    function editReader(reader_id){//修改读者弹层
         layer.open({
             type: 2,
-            title: '修改图书',
+            title: '修改读者账号：'+reader_id,
             skin: 'layui-layer-demo', //加上边框
-            area: ['800px', '600px'], //宽高
-            content: 'changeBook.action?book_id='+book_id
+            area: ['800px', '450px'], //宽高
+            content: 'changeReader.action?reader_id='+reader_id
         });
     }
 

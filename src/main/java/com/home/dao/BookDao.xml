@@ -45,7 +45,7 @@
         from
             book
         where
-            name = #{book_name}
+            book_name = #{book_name}
         limit 10
     </select>
 
@@ -67,7 +67,7 @@
         from
             book
         where
-            name = #{book_name} and author = #{author}
+            book_name = #{book_name} and author = #{author}
         limit 10
     </select>
 </mapper>

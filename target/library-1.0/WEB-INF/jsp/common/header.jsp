@@ -48,14 +48,14 @@
         </c:if>
         <c:if test="${reader!=null}">
             <li class="layui-nav-item"><a href="book.action">图书列表</a></li>
-            <li class="layui-nav-item"><a href="listDisBack.action">借阅记录</a></li>
+            <li class="layui-nav-item"><a href="listDisBack.action">已借阅图书</a></li>
             <li class="layui-nav-item"><a onclick="alterPwd('1');">修改密码</a></li>
         </c:if>
 
     </ul>
     <ul class="layui-nav layui-layout-right">
         <li class="layui-nav-item">
-            <a href="javascript:;">
+            <a href="javascript:;" id="use">
                 <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
                 ${reader.reader_name }
                ${admin.name}
