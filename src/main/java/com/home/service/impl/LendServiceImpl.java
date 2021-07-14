@@ -46,6 +46,21 @@ public class LendServiceImpl implements LendService {
         return lendInfos;
     }
 
+    //归还图书
+    @Override
+    public int backLendInfo(Integer book_id, String reader_name) {
+        //获取当前时间
+        Date now = new Date();
+        //借阅时间   转为需要的****-**-**格式
+        String back_date = new SimpleDateFormat("yyyy-MM-dd").format(now);
+
+        //借阅状态  已借阅  已归还：
+        String state = "已归还";
+
+        int result = lendInfoDao.updateBackInfo(book_id, reader_name, back_date, state);
+        System.out.println(result+"归还结果");
+        return result;
+    }
 
     //借阅图书  默认事务异常回滚
     @Override
@@ -70,12 +85,14 @@ public class LendServiceImpl implements LendService {
             state = "已借阅";
             int result = lendInfoDao.insertLendInfoDao(reader_name, book_id, book_name, lend_date, state);
             return result;
-        } else if (lendInfo.getState() == "已归还") {
-            //添加借阅记录
+        }
+        else if(lendInfo != null && lendInfo.getState().equals("已归还")){
+            //修改借阅记录为：已借阅
             state = "已借阅";
-            int result = lendInfoDao.insertLendInfoDao(reader_name, book_id, book_name, lend_date, state);
+            int result = lendInfoDao.updateLendInfo(reader_name,book_name,lend_date,state);
+            System.out.println(result);
             return result;
         }
-        return 3;
+            return 3;
     }
 }

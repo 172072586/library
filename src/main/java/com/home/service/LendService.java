@@ -21,4 +21,6 @@ public interface LendService {
     //根据借阅状态查询借阅记录
     ArrayList<LendInfo> findLendState(String state);
 
+    //归还图书
+    int backLendInfo(Integer book_id,String reader_name);
 }

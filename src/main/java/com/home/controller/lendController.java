@@ -70,4 +70,16 @@ public class lendController {
         ArrayList<LendInfo> lendInfo = lendService.findLendState(state);
         return lendInfo;
     }
+
+    //归还图书
+    @RequestMapping("/editLendInfo")
+    @ResponseBody
+    public String editLendInfo(Integer book_id,String reader_name){
+        int result = lendService.backLendInfo(book_id, reader_name);
+        if(result == 1) {
+            return "归还成功";
+        }else{
+            return "";
+        }
+    }
 }

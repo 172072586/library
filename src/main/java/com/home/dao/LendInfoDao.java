@@ -28,4 +28,10 @@ public interface LendInfoDao {
 
     //通过读者和书id查询借阅状态
     LendInfo selectReaderBook(@Param("reader_name") String reader_name,@Param("book_id") Integer book_id);
+
+    //修改借阅状态为：已借阅
+    int updateLendInfo(@Param("reader_name") String reader_name, @Param("book_name")String book_name, @Param("lend_date")String lend_date, @Param("state")String state);
+
+    //归还图书
+    int updateBackInfo(@Param("book_id") Integer book_id,@Param("reader_name") String reader_name,@Param("back_date")String back_date, @Param("state")String state);
 }

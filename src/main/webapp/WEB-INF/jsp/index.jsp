@@ -55,7 +55,7 @@
 </select>
 <div style=" text-align: center;  color: #808080;">
     <table width="100%" border="1" style="border-color: #999999">
-        <thead style="height: 45px; font-size: 18px;" >
+        <thead style="height: 50px; font-size: 18px;" >
         <tr bgcolor="#eff8ff"  >
             <td>书本编号</td>
             <td>书名</td>
@@ -166,7 +166,7 @@
             var book = "";
             $.each(data, function(i, n) {
                 var a = "";
-                a += "<tr style='height: 36px'><td>"+n.book_id+"</td><td>"+n.book_name+"</td><td>"+n.author+"</td><td>"+n.publish+"</td><td>"+n.pubdate+"</td><td>"+n.stock+"</td><td>"+n.price+"</td>" +
+                a += "<tr style='height: 42px'><td>"+n.book_id+"</td><td>"+n.book_name+"</td><td>"+n.author+"</td><td>"+n.publish+"</td><td>"+n.pubdate+"</td><td>"+n.stock+"</td><td>"+n.price+"</td>" +
                     "<td><button id="+n.book_name+" "+"onclick='lendBook("+n.book_id+");'>借阅</button></td></tr>";
                 book += a;
             });

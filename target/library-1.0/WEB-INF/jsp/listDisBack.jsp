@@ -61,7 +61,7 @@
             <td>书本编号</td>
             <td>书名</td>
             <td>借阅时间</td>
-            <td>借阅状态</td>
+            <td>借阅状态(点击归还)</td>
         </tr>
         </thead >
 
@@ -156,12 +156,32 @@
         $("#tbody").empty();
         $("#tbody").append(lendinfo);
     }
+
+
     //归还图书事件
     function deleteLendInfo(book_id) {
-        alert(book_id)
-        var  state= $("#"+book_id).text();
-        alert(state)
-
+        var  state= $("#"+book_id).text(); //借阅状态
+        if(state == "已归还"){
+            alert("改图书已归还   无需再次归还")
+        }
+        if(state == "已借阅"){
+            //归还图书
+            var reader_name = $("#use").text().trim();
+            $.ajax({
+                url:"editLendInfo.action",
+                type:"post",
+                data:{"book_id":book_id,"reader_name":reader_name},
+                dataType:"text",
+                success:function (data) {
+                    if(data != null){
+                        alert("归还成功")
+                    }else{
+                        alert("归还失败")
+                    }
+                }
+            })
+            window.location.reload();
+        }
     }
 
 

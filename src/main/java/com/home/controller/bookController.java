@@ -88,7 +88,6 @@ public class bookController {
     @ResponseBody
     public List<Category> queryBookType(){
         List<Category> categories = categoryService.queryType();
-        System.out.println(categories);
         if(categories != null){
             return categories;
         }
@@ -98,10 +97,8 @@ public class bookController {
     //修改图书类别
     @RequestMapping("/editType")
     public ModelAndView editType(Integer cid,String cname){
-        System.out.println(cid+"==="+cname);
         ModelAndView mv = new ModelAndView();
         int result = categoryService.editType(cid, cname);
-        System.out.println(result);
         if(result != -1){
             mv.addObject("tipsBookType","修改成功");
             mv.setViewName("type/editBookType");
@@ -128,7 +125,6 @@ public class bookController {
     @ResponseBody//相应ajax请求返回json数据
     public List<Category> queryType(){
         List<Category> categories = categoryService.queryType();
-        //System.out.println(categories);
         if(categories != null){
             return categories;
         }
@@ -151,7 +147,6 @@ public class bookController {
     @ResponseBody
     public ArrayList<Book> findAllBook(){
         ArrayList<Book> books = bookService.queryAllBook();
-        //System.out.println(books);
         if(books != null){
             //System.out.println("执行了返回值判断?");
             return books;
@@ -170,7 +165,6 @@ public class bookController {
             mv.addObject("msg","修改失败");
         }
         mv.setViewName("book/editBook");
-        //mv.setViewName("forward:/WEB-INF/jsp/index.jsp");
         return mv;
     }
 

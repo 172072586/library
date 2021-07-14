@@ -69,4 +69,25 @@
         where
             reader_name = #{reader_name} and book_id = #{book_id}
     </select>
+
+    <!--修改借阅状态为：已借阅-->
+    <update id="updateLendInfo">
+        update
+            lend_info
+        set
+            lend_date = #{lend_date},state = #{state},back_date = NULL
+        where
+            book_name = #{book_name} and reader_name = #{reader_name}
+
+    </update>
+
+    <!--归还图书-->
+    <update id="updateBackInfo">
+        update
+            lend_info
+        set
+            back_date = #{back_date},state = #{state}
+        where
+            book_id = #{book_id} and reader_name = #{reader_name}
+    </update>
 </mapper>
