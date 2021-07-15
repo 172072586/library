@@ -95,4 +95,11 @@ public class LendServiceImpl implements LendService {
         }
             return 3;
     }
+
+    //查询个人借阅记录
+    @Override
+    public ArrayList<LendInfo> findReaderLendInfo(String reader_name) {
+        ArrayList<LendInfo> lendInfos = lendInfoDao.selectReaderLendInfo(reader_name);
+        return lendInfos;
+    }
 }

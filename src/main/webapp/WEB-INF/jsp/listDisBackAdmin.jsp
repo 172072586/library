@@ -1,101 +1,191 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
     String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/";
 %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
     <base href="<%=basePath%>"/>
-    <title>读者未还图书</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>图书管理系统</title>
     <script type="text/javascript" src="js/jquery.js"></script>
+    <style>
+        .demo-carousel{height: 200px; line-height: 200px; text-align: center;}
+    </style>
+    <style type="text/css">
+        button{
+            border-color: unset;
+            height: 35px;
+            width: 100px;
+            color: white;
+            background-color: #28B779;
+            font-size: 20px;
+        }
+
+    </style>
 </head>
-<body class="layui-layout-body">
+<body <%--class="layui-layout-body"--%>>
 <div class="layui-layout layui-layout-admin">
     <jsp:include page="/WEB-INF/jsp/common/header.jsp" flush="true"/>
+</div>
+<!-- 搜索条件表单 -->
 
-    <!-- 搜索条件表单 -->
+<div align="center">
     <div class="demoTable layui-form">
         <div class="layui-inline">
-            <input class="layui-input" name="bname" id="bname" autocomplete="off"  placeholder="请输入书名">
-        </div>
-        <div class="layui-inline">
-            <input class="layui-input" name="rname" id="rname" autocomplete="off" placeholder="请输入读者">
+            <input class="layui-input" name="book_name" id="book_name" autocomplete="off"  placeholder="请输入借阅书名">
         </div>
         <div class="layui-inline">
             <div class="layui-input-block">
                 <select name="state" id="state">
                     <option value="">请选择归还状态</option>
-                    <option value="2">未还</option>
-                    <option value="1">已还</option>
+                    <option value="已借阅">已借阅</option>
+                    <option value="已归还">已归还</option>
                 </select>
             </div>
         </div>
-        <button class="layui-btn" data-type="reload">搜索</button>
+        <a class="layui-btn" onclick="selecLend();" data-type="reload">搜索</a>
+        <a href="listDisBack.action" class="layui-btn"  data-type="reload">查看图书借阅记录</a>
     </div>
-    <%--    <a  style="margin-left: 70px" class="layui-btn layui-btn-normal" onclick="add();">添加图书</a>--%>
 </div>
 
-<table class="layui-hide" id="demo" lay-filter="test"></table>
+<br>
+</select>
+<div style=" text-align: center;  color: #808080;">
+    <table width="100%" border="1" style="border-color: #999999">
+        <thead style="height: 47px; font-size: 18px;" >
+        <tr bgcolor="#eff8ff"  >
+            <td>借阅人</td>
+            <td>书本编号</td>
+            <td>书名</td>
+            <td>借阅时间</td>
+            <td>归还时间</td>
+            <td>借阅状态(点击归还)</td>
+        </tr>
+        </thead >
 
-<div class="layui-tab-item layui-show">
-    <div id="pageDemo"></div>
+        <tbody id="tbody" style=" font-size: 18px">
+        </tbody>
+    </table>
 </div>
-<script type="text/html" id="barDemo">
-    {{#  if(d.state =="2"){ }}
-    <a class="layui-btn layui-btn-normal backBook" lay-event="backBook">确认归还</a>
-    {{#  } }}
-    {{#  if(d.state =="1"){ }}
-    <button class="layui-btn  lend layui-btn-disabled backBook" lay-event="lend" disabled="disabled">已归还</button>
-    {{#  } }}
-</script>
-<div id="testDiv"></div>
-<script>
-    //JavaScript代码区域
-    layui.use('element', function(){
-        var element = layui.element;
 
-    });
-    var url = "/"
-</script>
 
 <script src="js/layui.js"></script>
 
 <script>
-    layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'element', 'slider','laytpl'], function(){
-        var laydate = layui.laydate //日期
-            ,laypage = layui.laypage //分页
-            ,layer = layui.layer //弹层
-            ,table = layui.table //表格
-            ,carousel = layui.carousel //轮播
-            ,upload = layui.upload //上传
-            ,element = layui.element //元素操作
-            ,slider = layui.slider //滑块
-            ,laytpl = layui.laytpl
-
-        //执行一个 table 实例
-        table.render({
-            elem: '#demo'
-            ,height: 550
-            ,url: 'listDisBackBook.do?power=1' //数据接口
-            ,title: '图书表'
-            ,page: true
-            ,limit: 6
-            ,limits: [5,10,15,20]
-            ,cols: [[ //表头
-                {type: 'checkbox', fixed: 'left'}
-                ,{field: 'reader_id', title: '借阅号', width:150, sort: true}
-                ,{field: 'readerName', title: '借阅人', width:150}
-                ,{field: 'bookName', title: '书名', width: 200}
-                ,{field: 'lend_date', title: '借阅时间', width:200, sort: true}
-                ,{field: 'back_date', title: '最晚归还时间', width: 200}
-                ,{field: 'fine', title: '罚款', width: 150,templet: function(d){
-                        return d.fine=="0"?'':'<a style="font-size:1.5em;color: red;font-weight: bold">'+d.fine+'元</a>';
-                    }}
-                ,{fixed: 'right',title: '操作', width: 200, align:'center', toolbar: '#barDemo'}
-            ]]
-            //用于搜索结果重载
-            ,id: 'testReload'
-        });
+    layui.config({
+        version: '1554901098009' //为了更新 js 缓存，可忽略
     });
+
+    layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'element', 'slider'], function() {
+        var laydate = layui.laydate //日期
+            , laypage = layui.laypage //分页
+            , layer = layui.layer //弹层
+            , table = layui.table //表格
+            , carousel = layui.carousel //轮播
+            , upload = layui.upload //上传
+            , element = layui.element //元素操作
+            , slider = layui.slider //滑块
+    })
+
+
+    $(function () {
+        //进入界面查询借阅记录
+        $.ajax({
+            url:"findLendInfo.action",
+            type:"post",
+            dataType:"json",
+            success:function (data) {
+                /*$("#tbody").empty();*/
+                eachLendInfo(data);
+            }
+        })
+    })
+
+    //条件查询
+    function selecLend() {
+        var book_name = $("#book_name").val().trim();
+        var state = $("#state").val().trim();
+        /*alert(book_name+""+state);*/
+        if (book_name != "" && state != "") {
+            $.ajax({
+                url: "queryLendInfo.action",
+                dataType: "json",
+                type: "post",
+                data: {"book_name": book_name, "state": state},
+                success: function (data) {
+                    eachLendInfo(data)
+                }
+            })
+        }else if(book_name != "" && state == ""){
+            $.ajax({
+                url: "queryLendName.action",
+                dataType: "json",
+                type: "post",
+                data: {"book_name": book_name},
+                success: function (data) {
+                    eachLendInfo(data)
+                }
+            })
+        }else if(book_name == "" && state != ""){
+            $.ajax({
+                url: "queryState.action",
+                dataType: "json",
+                type: "post",
+                data: { "state": state},
+                success: function (data) {
+                    eachLendInfo(data)
+                }
+            })
+        }else if (book_name == "" && state == "") {
+            alert("请输入查询条件！")
+        }
+    }
+
+    //查询借阅事件
+    //遍历返回的json格式book数据
+    function eachLendInfo(data) {
+        var lendinfo = "";
+        $.each(data, function(i, n) {
+            var a = "";
+            a += "<tr style='height: 42px'><td>"+n.reader_name+"</td><td>"+n.book_id+"</td><td>"+n.book_name+"</td><td>"+n.lend_date+"</td><td>" +n.back_date+"</td><td>"+
+                "<button id="+n.book_id+" "+"onclick='deleteLendInfo("+ n.book_id +");'>"+n.state+"</button></td></tr>"
+            lendinfo += a;
+        });
+        $("#tbody").empty();
+        $("#tbody").append(lendinfo);
+    }
+
+
+    //归还图书事件
+    function deleteLendInfo(book_id) {
+        var  state= $("#"+book_id).text(); //借阅状态
+        if(state == "已归还"){
+            alert("改图书已归还   无需再次归还")
+        }
+        if(state == "已借阅"){
+            //归还图书
+            var reader_name = $("#use").text().trim();
+            $.ajax({
+                url:"editLendInfo.action",
+                type:"post",
+                data:{"book_id":book_id,"reader_name":reader_name},
+                dataType:"text",
+                success:function (data) {
+                    if(data != null){
+                        alert("归还成功")
+                    }else{
+                        alert("归还失败")
+                    }
+                }
+            })
+            window.location.reload();
+        }
+    }
+
+
 </script>
 </body>
 </html>

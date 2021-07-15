@@ -21,7 +21,7 @@
             (#{reader_id},#{card_state},#{sex},#{telephone},#{reader_name},#{address},#{birthday},#{password})
     </insert>
 
-    <!--验证读者是否存在-->
+    <!--验证读者是否存在--><!--验证读者原密码-->
     <select id="selectReaderDao" resultType="com.home.entity.Reader">
         select
             *
@@ -87,5 +87,16 @@
         where
              reader_id=#{reader_id}
     </update>
+
+    <!--修改读者密码-->
+    <update id="updatePwd">
+        update
+            reader
+        set
+            password = #{password}
+        where
+            reader_id = #{reader_id} and reader_name =#{reader_name}
+    </update>
+
 
 </mapper>

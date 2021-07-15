@@ -73,4 +73,20 @@ public class ReaderServiceImpl implements ReaderService {
         int result = readerDao.submitAddReader(reader);
         return result;
     }
+
+    //验证读者原密码
+    @Override
+    public Reader queryOldPwd(Integer reader_id,  String oldPwd) {
+        String password = oldPwd;
+        Reader reader = readerDao.selectReaderDao(reader_id,password);
+        return reader;
+    }
+
+    //修改读者密码
+    @Override
+    public int editPwd(Integer reader_id,String reader_name, String newPwd) {
+        String password = newPwd;
+        int result = readerDao.updatePwd(reader_id,reader_name,password);
+        return result;
+    }
 }

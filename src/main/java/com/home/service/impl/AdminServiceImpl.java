@@ -18,4 +18,20 @@ public class AdminServiceImpl implements AdminService {
         Admin admin = adminDao.selectAdmin(name, password);
         return admin;
     }
+
+    //查询原密码是否正确
+    @Override
+    public Admin queryOldPwd(String name,String oldPwd) {
+        String password = oldPwd;
+        Admin admin = adminDao.selectAdmin(name, password);
+        return admin;
+    }
+
+    //修改密码
+    @Override
+    public int editPwd(Integer id,String name, String newPwd) {
+        String password = newPwd;
+        int result = adminDao.updateAdmin(id,name, password);
+        return result;
+    }
 }

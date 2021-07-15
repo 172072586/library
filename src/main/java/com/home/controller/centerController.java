@@ -32,10 +32,13 @@ public class centerController {
         return "register";
     }
 
+    //修改密码页面
     @RequestMapping("/toAlterPwd")
-    public String toAlterPwd(){
-        //修改密码页面
-        return "alterPwd";
+    public ModelAndView toAlterPwd(Integer id){
+        ModelAndView mv = new ModelAndView();
+        mv.addObject("id",id);
+        mv.setViewName("alterPwd");
+        return mv;
     }
 
     //注册读者
@@ -63,7 +66,7 @@ public class centerController {
         if(power == 0){//管理员账号
             //验证账号是否存在
             Admin admin = adminService.queryAdmin(name, password);
-            System.out.println(admin);
+            //System.out.println(admin);
             if(admin != null){
                 session.setAttribute("admin",admin);
                 mv.setViewName("index");
@@ -73,7 +76,7 @@ public class centerController {
             //验证账号是否存在
             Integer reader_id = Integer.valueOf(name);
             Reader reader = readerService.queryReader(reader_id, password);
-            System.out.println(reader);
+            //System.out.println(reader);
             if(reader != null){
                 session.setAttribute("reader",reader);
                 mv.setViewName("index");
@@ -87,7 +90,7 @@ public class centerController {
     }
 
     //退出系统
-    @RequestMapping("logout")
+    @RequestMapping("/logout")
     public ModelAndView toLogout(HttpSession session){
         session.removeAttribute("admin");
         session.removeAttribute("reader");
@@ -96,7 +99,46 @@ public class centerController {
         return mv;
     }
 
+    //修改读者密码
+    @RequestMapping("/alterReaderPwd")
+    public ModelAndView alterReaderPwd(Integer reader_id,String reader_name,String oldPwd,String newPwd){
+        System.out.println(reader_id+"----"+reader_name+"-----"+oldPwd+"----"+newPwd);
+        ModelAndView mv = new ModelAndView();
+        //1.查询原密码是否正确
+        Reader reader = readerService.queryOldPwd(reader_id,oldPwd);
+        System.out.println(reader);
+        if(reader != null){ //验证通过  可以修改密码
+            //2.修改密码
+            int result = readerService.editPwd(reader_id,reader_name, newPwd);
+            if(result == 1){
+                mv.addObject("msg","修改成功");
+            }else{
+                mv.addObject("msg","修改失败");
+            }
+        }
+        mv.setViewName("alterPwd");
+        return mv;
+    }
 
+    //修改管理员密码
+    @RequestMapping("/alterAdminPwd")
+    public ModelAndView alterAdminPwd(String name,String oldPwd,String newPwd){
+        ModelAndView mv = new ModelAndView();
+        //1.查询原密码是否正确
+        Admin admin = adminService.queryOldPwd(name, oldPwd);
+        if(admin != null){ //验证通过  可以修改密码
+            //2.修改密码
+            Integer id = admin.getId();
+            int result = adminService.editPwd(id, name, newPwd);
+            if(result == 1){
+                mv.addObject("msg","修改成功");
+            }else{
+                mv.addObject("msg","修改失败");
+            }
+        }
+        mv.setViewName("alterPwd");
+        return mv;
+    }
 
 
 }

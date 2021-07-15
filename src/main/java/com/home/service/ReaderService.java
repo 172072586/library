@@ -32,4 +32,9 @@ public interface ReaderService {
     //修改读者信息
     int editReader(Reader reader);
 
+    //验证读者原密码
+    Reader queryOldPwd(Integer reader_id,  String oldPwd);
+
+    //修改读者密码
+    int editPwd(Integer reader_id,String reader_name, String newPwd);
 }

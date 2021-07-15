@@ -133,12 +133,6 @@
         }
     })
 
-    /*$("#editBtn").onclick(function () {
-        var book_id =  $("#book_id").val();
-        var price =  $("#price").val();
-        var stock =  $("#stock").val();
-        alert(book_id+""+price+stock)
-    })*/
 
 </script>
 

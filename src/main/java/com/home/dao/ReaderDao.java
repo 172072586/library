@@ -9,7 +9,7 @@ public interface ReaderDao {
     //注册读者
     int insertReaderDao(Reader reader);
 
-    //验证读者是否存在
+    //验证读者是否存在 //验证读者原密码
     Reader selectReaderDao(@Param("reader_id") Integer reader_id, @Param("password") String password);
 
     //管理员添加读者功能
@@ -33,5 +33,6 @@ public interface ReaderDao {
     //修改读者
     int updateReader(Reader reader);
 
-
+    //修改读者密码
+    int updatePwd(@Param("reader_id") Integer reader_id,@Param("reader_name") String reader_name, @Param("password") String password);
 }

@@ -92,8 +92,9 @@
 
     $(function () {
         //进入界面查询借阅记录
+        var reader_name = $("#use").text().trim();
         $.ajax({
-            url:"findLendInfo.action",
+            url:"ReaderLendInfo.action?reader_name=" + reader_name,
             type:"post",
             dataType:"json",
             success:function (data) {

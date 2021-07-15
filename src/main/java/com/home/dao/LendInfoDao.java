@@ -34,4 +34,7 @@ public interface LendInfoDao {
 
     //归还图书
     int updateBackInfo(@Param("book_id") Integer book_id,@Param("reader_name") String reader_name,@Param("back_date")String back_date, @Param("state")String state);
+
+    //查询个人借阅记录
+    ArrayList<LendInfo> selectReaderLendInfo(@Param("reader_name") String reader_name);
 }

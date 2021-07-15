@@ -33,26 +33,20 @@
     <ul class="layui-nav layui-layout-left">
 
         <c:if test="${admin!=null}">
-            <%--<li class="layui-nav-item">
-                <a href="javascript:;">图书管理</a>
-                <dl class="layui-nav-child">
-                    <dd><a href="book.action">图书列表</a></dd>
-                    <dd><a href="bookType.action" >分类管理</a></dd>
-                </dl>
-            </li>--%>
             <li class="layui-nav-item"><a href="book.action">图书列表</a></li>
             <li class="layui-nav-item"><a href="bookType.action">类别列表</a></li>
             <li class="layui-nav-item"><a href="readerIndex.action">读者列表</a></li>
             <li class="layui-nav-item"><a href="listDisBackAdmin.action">借阅管理</a></li>
-            <li class="layui-nav-item"><a onclick="alterPwd('0');">修改密码</a></li>
+            <li class="layui-nav-item"><a onclick="alterPwd(${admin.id});">修改密码</a></li>
         </c:if>
         <c:if test="${reader!=null}">
             <li class="layui-nav-item"><a href="book.action">图书列表</a></li>
             <li class="layui-nav-item"><a href="listDisBack.action">已借阅图书</a></li>
-            <li class="layui-nav-item"><a onclick="alterPwd('1');">修改密码</a></li>
+            <li class="layui-nav-item"><a onclick="alterPwd(${reader.reader_id});">修改密码</a></li>
         </c:if>
 
     </ul>
+
     <ul class="layui-nav layui-layout-right">
         <li class="layui-nav-item">
             <a href="javascript:;" id="use">
@@ -69,13 +63,13 @@
 </body>
 <script src="js/layui.js"></script>
 <script>
-    function alterPwd(state){//添加
+    function alterPwd(id){//修改密码
         layer.open({
             type: 2,
             title: '修改密码',
             skin: 'layui-layer-demo', //加上边框
-            area: ['500px', '300px'], //宽高
-            content: 'toAlterPwd.action?state='+state
+            area: ['520px', '420px'], //宽高
+            content: 'toAlterPwd.action?id='+id
         });
     }
 </script>

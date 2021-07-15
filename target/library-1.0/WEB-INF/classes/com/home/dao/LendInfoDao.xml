@@ -90,4 +90,15 @@
         where
             book_id = #{book_id} and reader_name = #{reader_name}
     </update>
+
+    <!--查询个人借阅记录-->
+    <select id="selectReaderLendInfo" resultType="com.home.entity.LendInfo">
+        select
+            *
+        from
+            lend_info
+        where
+            reader_name = #{reader_name}
+    </select>
+
 </mapper>

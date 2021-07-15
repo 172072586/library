@@ -43,6 +43,7 @@ public class lendController {
     @ResponseBody
     public ArrayList<LendInfo> findLendInfo(){
         ArrayList<LendInfo> lendInfos = lendService.queryLendInfo();
+        //System.out.println(lendInfos);
         return lendInfos;
     }
 
@@ -81,5 +82,13 @@ public class lendController {
         }else{
             return "";
         }
+    }
+
+    //查询读者个人借阅记录
+    @RequestMapping("/ReaderLendInfo")
+    @ResponseBody
+    public ArrayList<LendInfo> ReaderLendInfo(String reader_name){
+        ArrayList<LendInfo> readerLendInfo = lendService.findReaderLendInfo(reader_name);
+        return readerLendInfo;
     }
 }
